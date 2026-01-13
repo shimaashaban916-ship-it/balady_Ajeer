@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ef4444">
+    <title>عقد موقوف - نظام أجير</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --danger-color: #ef4444;
+            --danger-gradient: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+            --ajeer-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--danger-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            direction: rtl;
+        }
+
+        .blocked-header {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .blocked-header h1 {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .blocked-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .blocked-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 32px 24px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-container {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+            }
+        }
+
+        .icon-container i {
+            font-size: 50px;
+            color: var(--danger-color);
+        }
+
+        .blocked-card h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .blocked-card .subtitle {
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .reason-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 2px solid #fecaca;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .reason-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #991b1b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .reason-text {
+            font-size: 16px;
+            color: #7f1d1d;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .contact-info h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #1e3a8a;
+            font-weight: 600;
+            font-size: 13px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-item i {
+            color: #3b82f6;
+            font-size: 16px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--ajeer-gradient);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+            width: 100%;
+            min-height: 48px;
+        }
+
+        .back-btn:active {
+            transform: scale(0.98);
+            color: white;
+        }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            .blocked-card {
+                padding: 48px 40px;
+                max-width: 500px;
+            }
+
+            .icon-container {
+                width: 120px;
+                height: 120px;
+            }
+
+            .icon-container i {
+                font-size: 60px;
+            }
+
+            .blocked-card h2 {
+                font-size: 28px;
+            }
+
+            .reason-box {
+                padding: 24px;
+            }
+
+            .back-btn {
+                width: auto;
+                padding: 14px 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <div class="blocked-header">
+        <h1>
+            <i class="bi bi-shield-x"></i>
+            نظام أجير
+        </h1>
+    </div>
+
+    <div class="blocked-container">
+        <div class="blocked-card">
+            <div class="icon-container">
+                <i class="bi bi-shield-fill-x"></i>
+            </div>
+
+            <h2>عقد موقوف</h2>
+            <p class="subtitle">هذا العقد غير صالح حالياً</p>
+
+            <div class="reason-box">
+                <div class="reason-label">
+                    <i class="bi bi-info-circle-fill"></i>
+                    سبب الإيقاف
+                </div>
+                <div class="reason-text" id="reasonText">غير محدد</div>
+            </div>
+
+            <div class="contact-info">
+                <h3>
+                    <i class="bi bi-headset"></i>
+                    للاستفسار
+                </h3>
+                <div class="contact-item">
+                    <i class="bi bi-envelope-fill"></i>
+                    تواصل مع المسؤول
+                </div>
+                <div class="contact-item">
+                    <i class="bi bi-building-fill"></i>
+                    أو راجع مقدم الخدمة
+                </div>
+            </div>
+
+            <a href="index.html" class="back-btn">
+                <i class="bi bi-house-fill"></i>
+                الرئيسية
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const reason = urlParams.get('reason');
+        if (reason) {
+            document.getElementById('reasonText').innerText = decodeURIComponent(reason);
+        }
+    </script>
+
+</body>
+
+</html>

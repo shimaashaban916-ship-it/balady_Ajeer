@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <title>تصريح أجير</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --secondary-gradient: linear-gradient(135deg, #64748b 0%, #475569 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: white;
+            direction: rtl;
+            text-align: right;
+            min-height: 100vh;
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none !important;
+        }
+
+        .mobile-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-header h1 {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-header .back-btn {
+            color: white;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        /* Desktop Action Buttons - Premium Centered Design */
+        .action-buttons {
+            position: fixed;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(24px) saturate(200%);
+            -webkit-backdrop-filter: blur(24px) saturate(200%);
+            border-radius: 20px;
+            box-shadow:
+                0 12px 40px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: slideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .action-buttons button,
+        .action-buttons a {
+            border: none;
+            padding: 13px 24px;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            letter-spacing: -0.01em;
+        }
+
+        .action-buttons button::before,
+        .action-buttons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .action-buttons button:hover::before,
+        .action-buttons a:hover::before {
+            opacity: 1;
+        }
+
+        /* Toggle Button - Vibrant Purple */
+        .action-buttons .btn-toggle-type {
+            background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            color: white;
+            min-width: 170px;
+            box-shadow:
+                0 6px 16px rgba(168, 85, 247, 0.3),
+                0 2px 6px rgba(168, 85, 247, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .action-buttons .btn-toggle-type:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 24px rgba(168, 85, 247, 0.4),
+                0 4px 8px rgba(168, 85, 247, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+        }
+
+        .action-buttons .btn-toggle-type:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* PDF Download Button - Premium Blue */
+        .action-buttons button:not(.btn-toggle-type) {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            box-shadow:
+                0 6px 16px rgba(59, 130, 246, 0.3),
+                0 2px 6px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .action-buttons button:not(.btn-toggle-type):hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 24px rgba(59, 130, 246, 0.4),
+                0 4px 8px rgba(59, 130, 246, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+        }
+
+        .action-buttons button:not(.btn-toggle-type):active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Back Link - Elegant Grey */
+        .action-buttons a {
+            background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+            color: white;
+            box-shadow:
+                0 6px 16px rgba(100, 116, 139, 0.25),
+                0 2px 6px rgba(100, 116, 139, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .action-buttons a:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow:
+                0 10px 24px rgba(100, 116, 139, 0.35),
+                0 4px 8px rgba(100, 116, 139, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #475569 0%, #334155 100%);
+        }
+
+        .action-buttons a:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
+        /* Icon Styling */
+        .action-buttons i {
+            font-size: 17px;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Barcode Selector - Premium Integrated Design */
+        .barcode-select-wrapper {
+            position: relative;
+            min-width: 240px;
+            display: flex;
+            align-items: center;
+        }
+
+        .barcode-select {
+            width: 100%;
+            height: 46px;
+            background: linear-gradient(135deg, #fafbfc 0%, #f3f4f6 100%) !important;
+            border: 1.5px solid #e5e7eb !important;
+            border-radius: 14px;
+            padding: 0 46px 0 42px !important;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: #1e293b !important;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            outline: none !important;
+        }
+
+        .barcode-select:hover {
+            background: linear-gradient(135deg, #ffffff 0%, #fafbfc 100%) !important;
+            border-color: #3b82f6 !important;
+            box-shadow:
+                0 6px 16px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+        }
+
+        .barcode-select:focus {
+            border-color: #3b82f6 !important;
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.15),
+                0 6px 16px rgba(59, 130, 246, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
+            background: white !important;
+            transform: translateY(-1px);
+        }
+
+        .selector-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3b82f6;
+            font-size: 19px;
+            pointer-events: none;
+            z-index: 3;
+            filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        }
+
+        .selector-chevron {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 13px;
+            pointer-events: none;
+            z-index: 3;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .barcode-select-wrapper:focus-within .selector-chevron {
+            transform: translateY(-50%) rotate(180deg);
+            color: #3b82f6;
+        }
+
+        .barcode-select-wrapper:hover .selector-chevron {
+            color: #475569;
+        }
+
+        /* Mobile Bottom Actions */
+        /* Mobile Bottom Actions - Disabled */
+        .mobile-actions {
+            display: none !important;
+        }
+
+        .mobile-actions button,
+        .mobile-actions a {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            min-height: 54px;
+        }
+
+        .mobile-actions button i,
+        .mobile-actions a i {
+            font-size: 18px;
+        }
+
+        .mobile-actions .btn-pdf {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            color: #ef4444;
+        }
+
+        .mobile-actions .btn-print {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            color: #10b981;
+        }
+
+        .mobile-actions .btn-back {
+            background: linear-gradient(135deg, rgba(71, 85, 105, 0.1) 0%, rgba(71, 85, 105, 0.05) 100%);
+            color: #64748b;
+        }
+
+        /* A4 Page Container */
+        .page-wrapper {
+            width: 210mm;
+            margin: 100px auto 40px;
+            background: white;
+            box-shadow: none;
+        }
+
+        .contract-container {
+            padding: 10mm 15mm;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-right img {
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .header-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .header-left {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #qrcode {
+            width: 80px;
+            height: 80px;
+        }
+
+        #qrcode img,
+        #qrcode canvas {
+            width: 80px !important;
+            height: 80px !important;
+        }
+
+        .contract-number {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #000;
+            margin-top: 5px;
+            letter-spacing: 0.8px;
+            /* OK for Latin numbers/codes */
+            text-align: center;
+            width: 100px;
+        }
+
+        /* Intro Text */
+        .intro-text {
+            font-size: 12px;
+            line-height: 1.9;
+            text-align: right;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            padding: 0;
+            font-weight: 500;
+        }
+
+        /* Tables Container */
+        .tables-section {
+            display: block;
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0;
+        }
+
+        .data-table+.data-table {
+            margin-top: -1px;
+            /* Overlap borders slightly to avoid double borders */
+        }
+
+        .data-table th {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 8px 10px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 13px;
+            color: #1a1a1a;
+        }
+
+        .data-table td {
+            border: 1px solid #dee2e6;
+            padding: 6px 8px;
+            font-size: 10px;
+            vertical-align: middle;
+        }
+
+        .data-table td.label {
+            background-color: #e9ecef;
+            font-weight: 600;
+            color: #333;
+            width: 22%;
+        }
+
+        .data-table td.value {
+            font-weight: 500;
+            color: #1a1a1a;
+            width: 28%;
+        }
+
+        .data-table td.full-value {
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        /* Istiaara (borrowing) style */
+        .istiaara .data-table td.value,
+        .istiaara .data-table td.full-value {
+            background-color: #f8fafc !important;
+            /* Light for values (Contrast) */
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .istiaara .data-table td.label {
+            background-color: #efefef !important;
+            /* Light grey for Keys matching user image */
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .istiaara .data-table th {
+            background-color: #efefef !important;
+            /* Light grey for Headers matching user image */
+            color: #1e293b;
+        }
+
+        /* Default Ajeer styling - lighter fields */
+        .data-table td.value {
+            background-color: #f8fafc;
+            /* Very light grey/white for normal fields */
+        }
+
+        /* Provisions Section */
+        .provisions {
+            margin-top: 0;
+            padding-top: 15px;
+            background: transparent !important;
+        }
+
+        .provisions h2 {
+            font-size: 14px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .provisions h3 {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: #1a1a1a;
+        }
+
+        .provisions ul {
+            list-style: none;
+            padding-right: 5px;
+        }
+
+        .provisions li {
+            position: relative;
+            padding-right: 18px;
+            margin-bottom: 6px;
+            font-size: 11px;
+            line-height: 1.8;
+            font-weight: 500;
+            color: #1a1a1a;
+            letter-spacing: 0.01em;
+        }
+
+        .provisions li::before {
+            content: "●";
+            position: absolute;
+            right: 0;
+            font-size: 8px;
+            color: #333;
+            top: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 10px;
+            color: #1a1a1a;
+            font-weight: 600;
+            padding-top: 8px;
+            border-top: none;
+            background: transparent !important;
+        }
+
+        .footer a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            html,
+            body {
+                height: auto !important;
+                overflow: visible !important;
+                background: white;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .action-buttons,
+            .mobile-header,
+            .mobile-actions {
+                display: none !important;
+            }
+
+            .page-wrapper {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                height: auto !important;
+                min-height: auto !important;
+                max-height: none !important;
+                overflow: visible !important;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+
+            .contract-container {
+                padding: 12mm 15mm;
+                page-break-inside: avoid;
+            }
+
+            .data-table td.label,
+            .data-table th {
+                background-color: #e9ecef !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .istiaara .data-table th,
+            .istiaara .data-table td.label {
+                background-color: transparent !important;
+            }
+
+            .provisions,
+            .footer {
+                page-break-inside: avoid;
+            }
+
+            /* Reset mobile styles for print */
+            .contract-container {
+                padding: 12mm 15mm !important;
+                margin: 0 !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                background: white !important;
+            }
+
+            .header {
+                flex-direction: row !important;
+                gap: 20px !important;
+                padding: 12px 15px !important;
+                border-radius: 0 !important;
+                background: #fff !important;
+            }
+
+            .header-right {
+                order: 0 !important;
+            }
+
+            .header-left {
+                flex-direction: column !important;
+            }
+
+            #qrcode {
+                width: 80px !important;
+                height: 80px !important;
+            }
+
+            #qrcode img,
+            #qrcode canvas {
+                width: 80px !important;
+                height: 80px !important;
+            }
+
+            .intro-text {
+                background: transparent !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+
+            .data-table {
+                display: table !important;
+            }
+
+            .data-table tr {
+                display: table-row !important;
+            }
+
+            .data-table th {
+                background-color: #e9ecef !important;
+                color: #1a1a1a !important;
+                border-radius: 0 !important;
+            }
+
+            .data-table td.label {
+                width: 22% !important;
+            }
+
+            .data-table td.value {
+                width: 28% !important;
+            }
+
+            .provisions {
+                background: transparent !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+            }
+
+            .footer {
+                background: transparent !important;
+                border-radius: 0 !important;
+            }
+        }
+
+
+
+        /* Disable all Mobile Responsive Overrides */
+        @media (max-width: 768px) {
+
+            .mobile-header,
+            .mobile-actions {
+                display: none !important;
+            }
+
+            .action-buttons {
+                display: flex !important;
+            }
+
+            /* Allow body to be natural width (browser will zoom out due to viewport meta) */
+            body {
+                width: auto;
+                margin: 0;
+                background: white;
+                transform: none;
+            }
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .page-wrapper {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                border: none;
+            }
+
+            .contract-container {
+                padding: 0;
+            }
+        }
+    </style>
+    <!-- PDF Generation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- Desktop Actions -->
+    <!-- Desktop Actions -->
+    <div class="action-buttons no-print">
+        <button class="btn-toggle-type" onclick="toggleContractMode()">
+            <i class="bi bi-arrow-repeat"></i>
+            <span id="contract-mode-text">تعاقد أجير</span>
+        </button>
+
+        <div class="barcode-select-wrapper">
+            <i class="bi bi-qr-code-scan selector-icon"></i>
+            <select id="barcodeType" class="barcode-select" onchange="updateBarcodeType(this.value)">
+                <option value="verify">باركود التحقق (Web)</option>
+                <option value="data">باركود البيانات (Text)</option>
+            </select>
+            <i class="bi bi-chevron-down selector-chevron"></i>
+        </div>
+        <button onclick="downloadPDF()" class="shadow-sm">
+            <i class="bi bi-file-earmark-pdf"></i> تحميل PDF
+        </button>
+        <a href="index.html">
+            <i class="bi bi-arrow-right"></i> عودة
+        </a>
+    </div>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header no-print">
+        <div class="mobile-header-content">
+            <div class="back-btn" onclick="window.location.href='index.html'">
+                <i class="bi bi-arrow-right"></i>
+            </div>
+            <h1>
+                <i class="bi bi-file-text"></i>
+                <span id="mobile-contract-type">تفاصيل العقد</span>
+            </h1>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Actions -->
+    <div class="mobile-actions no-print">
+        <a href="index.html" class="btn-back">
+            <i class="bi bi-arrow-right"></i>
+            <span>عودة</span>
+        </a>
+        <button onclick="toggleMobileBarcode()" class="btn-print"
+            style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); color: #0284c7;">
+            <i class="bi bi-qr-code"></i>
+            <span id="mobile-barcode-label">تغيير إلى البيانات</span>
+        </button>
+        <button onclick="downloadPDF()" class="btn-pdf">
+            <i class="bi bi-file-earmark-pdf"></i>
+            <span>PDF</span>
+        </button>
+    </div>
+
+    <div class="page-wrapper" id="contract-page">
+        <div class="contract-container" id="contract-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-right">
+                    <img src="img/logo_ministry_new.png" alt="وزارة الموارد البشرية"
+                        onerror="this.style.display='none'">
+                    <img src="img/logo_ajeer_new.png" alt="أجير" onerror="this.style.display='none'">
+                </div>
+                <div class="header-center">
+                    <div class="header-title" id="data-contractType">تعاقد أجير</div>
+                </div>
+                <div class="header-left d-flex flex-column align-items-center gap-2">
+                    <div class="text-center">
+                        <!-- Dynamic Single QR Container -->
+                        <div id="qrcode-display" class="qr-box mb-1" style="width: 100px; height: 100px; padding: 0;">
+                        </div>
+                    </div>
+                    <div class="contract-number mt-1 text-center" id="data-contractNumber"
+                        style="font-size: 13.5px; font-weight: bold; color: #000; letter-spacing: 0.8px; width: 100px;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intro -->
+            <div class="intro-text">
+                نشعركم أنه تم التعاقد من قبلنا كجهة مقدمة للخدمة مع الجهة المستفيدة من الخدمة حسب المعلومات المبينة
+                أدناه، ولذلك تم تسجيل معلومات العقد لتكون بحوزة العامل لإثبات عدم مخالفته لنظام العمل ولتقديمها إلى من
+                يهمه الأمر من الجهات المختصة عند طلبها للتحقق من صحة تواجده في مكان تقديم الخدمة.
+            </div>
+
+            <!-- Tables Section -->
+            <div class="tables-section">
+                <!-- Worker Data -->
+                <table class="data-table" id="table-worker" style="display: none;">
+                    <tr>
+                        <th colspan="4">بيانات العامل</th>
+                    </tr>
+                    <tr id="row-workerName" style="display: none;">
+                        <td class="label">اسم العامل</td>
+                        <td class="value" id="data-workerName"></td>
+                        <td class="label">المهنة</td>
+                        <td class="value" id="data-workerProfession"></td>
+                    </tr>
+                    <tr id="row-workerIdNumber" style="display: none;">
+                        <td class="label">رقم الهوية / الإقامة</td>
+                        <td class="value" id="data-workerIdNumber"></td>
+                        <td class="label">الجنسية</td>
+                        <td class="value" id="data-workerNationality"></td>
+                    </tr>
+                </table>
+
+                <!-- Provider Data -->
+                <table class="data-table" id="table-provider" style="display: none;">
+                    <tr>
+                        <th colspan="4">بيانات مقدم الخدمة</th>
+                    </tr>
+                    <tr id="row-providerEntity" style="display: none;">
+                        <td class="label">المنشأة المقدمة للخدمة</td>
+                        <td class="value" id="data-providerEntity"></td>
+                        <td class="label">رقم المنشأة في وزارة الموارد البشرية والتنمية الاجتماعية</td>
+                        <td class="value" id="data-providerHrId"></td>
+                    </tr>
+                </table>
+
+                <!-- Beneficiary Data -->
+                <table class="data-table" id="table-beneficiary" style="display: none;">
+                    <tr>
+                        <th colspan="4">بيانات المستفيد من الخدمة</th>
+                    </tr>
+                    <tr id="row-beneficiaryEntity" style="display: none;">
+                        <td class="label">المنشأة المستفيدة من الخدمة</td>
+                        <td class="value" id="data-beneficiaryEntity"></td>
+                        <td class="label">رقم المنشأة في وزارة الموارد البشرية والتنمية الاجتماعية</td>
+                        <td class="value" id="data-beneficiaryHrId"></td>
+                    </tr>
+                </table>
+
+                <!-- Permit Data -->
+                <table class="data-table" id="table-permit" style="display: none;">
+                    <tr>
+                        <th colspan="4">بيانات التصريح</th>
+                    </tr>
+                    <tr id="row-contractSummary" style="display: none;">
+                        <td class="label">نبذة عن التعاقد</td>
+                        <td colspan="3" class="full-value" id="data-contractSummary"></td>
+                    </tr>
+                    <tr id="row-dates" style="display: none;">
+                        <td class="label">تاريخ بداية التصريح</td>
+                        <td class="value" id="data-startDate"></td>
+                        <td class="label">تاريخ نهاية التصريح</td>
+                        <td class="value" id="data-endDate"></td>
+                    </tr>
+                    <tr id="row-workLocations" style="display: none;">
+                        <td class="label">مواقع العمل</td>
+                        <td colspan="3" class="full-value" id="data-workLocations"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Provisions -->
+            <div class="provisions">
+                <h2>قرارات</h2>
+                <h3>أقر أنا المنشأة المقدمة للخدمة والموضحة بياناتي أعلاه وأتعهد بـ :</h3>
+                <ul>
+                    <li>إن العامل حامل هذا التصريح يقر بأن البيانات المدونة فيه صحيحة على مسؤوليته.</li>
+                    <li>يعمل لدى المنشأة المستفيدة بموجب عقد الخدمة المسجل ولا يجوز له العمل بخلاف ذلك.</li>
+                    <li>الالتزام والامتثال لأنظمة العمل واللوائح والقرارات ذات العلاقة.</li>
+                    <li>أن الموقع الإلكتروني هو المرجع الأساسي، وأي تعديل أو كشط في هذا التصريح يجعله غير قانوني.</li>
+                    <li>للتحقق من صحة هذا التصريح بإمكانك زيارة موقع أجير.</li>
+                </ul>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                للتحقق من صحة هذا التصريح وسريان مفعوله بإمكانك زيارة موقع أجير <a
+                    href="https://ajeer.com.sa">https://ajeer.com.sa</a><br>
+                خدمة معتمدة من وزارة الموارد البشرية والتنمية الاجتماعية.
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/reminder.js"></script>
+
+    <script>
+        let currentContract = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (id) {
+                loadContract(id);
+            } else {
+                alert('لا يوجد عقد محدد');
+                window.location.href = 'index.html';
+            }
+        });
+
+        async function loadContract(id) {
+            currentContract = await StorageManager.getContract(id);
+            if (!currentContract) {
+                alert('العقد غير موجود');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Set contract type in header
+            const contractTypeEl = document.getElementById('data-contractType');
+            if (contractTypeEl && currentContract.contractType) {
+                // Ensure proper prefix is always present
+                if (!currentContract.contractType.includes('تصريح أجير')) {
+                    // Check if it's "إعارة" type
+                    if (currentContract.contractType.includes('إعارة') || currentContract.contractType.includes('اعارة')) {
+                        contractTypeEl.innerText = "تصريح أجير - الإعارة";
+                    } else {
+                        contractTypeEl.innerText = "تصريح أجير - " + currentContract.contractType;
+                    }
+                } else {
+                    contractTypeEl.innerText = currentContract.contractType;
+                }
+            }
+
+            // Update mobile header title
+            const mobileContractType = document.getElementById('mobile-contract-type');
+            if (mobileContractType && currentContract.contractType) {
+                if (currentContract.contractType.includes('إعارة') || currentContract.contractType.includes('اعارة')) {
+                    mobileContractType.innerText = "تصريح أجير - الإعارة";
+                } else {
+                    mobileContractType.innerText = currentContract.contractType;
+                }
+            }
+
+            // Check if it's Istiaara (borrowing) contract - remove shading
+            const isIstiaara = currentContract.contractType &&
+                (currentContract.contractType.includes('استعارة') || currentContract.contractType.includes('تعاقد استعارة'));
+            if (isIstiaara) {
+                document.getElementById('contract-content').classList.add('istiaara');
+            }
+
+            // Populate contract number
+            const contractNumberEl = document.getElementById('data-contractNumber');
+            if (contractNumberEl && currentContract.contractNumber) {
+                contractNumberEl.innerText = currentContract.contractNumber;
+            }
+
+            // Helper function to show row and table if field has data
+            function showFieldIfHasData(fieldName, value, rowId, tableId) {
+                const el = document.getElementById('data-' + fieldName);
+                if (el && value) {
+                    el.innerText = value;
+                    const row = document.getElementById(rowId);
+                    if (row) row.style.display = 'table-row';
+                    const table = document.getElementById(tableId);
+                    if (table) table.style.display = 'table';
+                    return true;
+                }
+                return false;
+            }
+
+            // Worker Data - show rows only if they have data
+            // Helper for smart row display (Hides empty cells & expands remaining)
+            function updateSmartRow(rowId, val1Id, val2Id, val1Data, val2Data) {
+                const row = document.getElementById(rowId);
+                const el1 = document.getElementById(val1Id);
+                const el2 = document.getElementById(val2Id);
+
+                if (!row || !el1 || !el2) return;
+
+                // 1. Both empty -> Hide Row
+                if (!val1Data && !val2Data) {
+                    row.style.display = 'none';
+                    return;
+                }
+
+                // Show row & reset
+                row.style.display = 'table-row';
+                const label1 = el1.previousElementSibling;
+                const label2 = el2.previousElementSibling;
+
+                // Default State
+                el1.innerText = val1Data || '';
+                el2.innerText = val2Data || '';
+                el1.colSpan = 1;
+                el2.colSpan = 1;
+                el1.style.display = 'table-cell';
+                el2.style.display = 'table-cell';
+                if (label1) label1.style.display = 'table-cell';
+                if (label2) label2.style.display = 'table-cell';
+
+                // 2. Value 2 missing -> Hide 2, Expand 1
+                if (!val2Data) {
+                    el2.style.display = 'none';
+                    if (label2) label2.style.display = 'none';
+                    el1.colSpan = 3;
+                }
+                // 3. Value 1 missing -> Hide 1 (Value 2 shifts right)
+                else if (!val1Data) {
+                    el1.style.display = 'none';
+                    if (label1) label1.style.display = 'none';
+                    // Value 2 takes its natural place (might want to expand it too? lets keep simple 1 colspan)
+                    el2.colSpan = 3; // Let's expand it to look good
+                }
+
+                // Parent table visibility
+                const table = row.closest('table');
+                if (table) table.style.display = 'table';
+            }
+
+            // Worker Data
+            updateSmartRow('row-workerName', 'data-workerName', 'data-workerProfession', currentContract.workerName, currentContract.workerProfession);
+            updateSmartRow('row-workerIdNumber', 'data-workerIdNumber', 'data-workerNationality', currentContract.workerIdNumber, currentContract.workerNationality);
+
+            // Provider Data
+            updateSmartRow('row-providerEntity', 'data-providerEntity', 'data-providerHrId', currentContract.providerEntity, currentContract.providerHrId);
+
+            // Beneficiary Data
+            updateSmartRow('row-beneficiaryEntity', 'data-beneficiaryEntity', 'data-beneficiaryHrId', currentContract.beneficiaryEntity, currentContract.beneficiaryHrId);
+
+            // Permit Data
+            let hasPermitData = false;
+
+            // Helper for Single Full-Width Row (Summary, Locations)
+            function updateSmartRowSimple(rowId, valId, valData) {
+                const row = document.getElementById(rowId);
+                const el = document.getElementById(valId);
+                if (!row || !el) return;
+
+                if (!valData || valData.trim() === '') {
+                    row.style.display = 'none';
+                    return;
+                }
+
+                row.style.display = 'table-row';
+                el.innerText = valData;
+
+                // Show table if hidden
+                const table = row.closest('table');
+                if (table) table.style.display = 'table';
+            }
+
+            // Permit Data
+            // We can reuse updateSmartRow for Dates (2 cols), and Simple for others (1 col)
+
+            // Dates
+            updateSmartRow('row-dates', 'data-startDate', 'data-endDate',
+                currentContract.startDate ? formatDate(currentContract.startDate) : null,
+                currentContract.endDate ? formatDate(currentContract.endDate) : null
+            );
+
+            // Summary
+            updateSmartRowSimple('row-contractSummary', 'data-contractSummary', currentContract.contractSummary);
+
+            // Work Locations
+            updateSmartRowSimple('row-workLocations', 'data-workLocations', currentContract.workLocations);
+
+            // Permit Table Visibility check not needed as helpers handle it individually
+            // logic: hidden by default, helper shows table if row has data.
+
+            // Arabic to English transliteration function
+            function transliterate(text) {
+                if (!text) return '-';
+                const map = {
+                    'ا': 'a', 'أ': 'a', 'إ': 'e', 'آ': 'a', 'ب': 'b', 'ت': 't', 'ث': 'th',
+                    'ج': 'g', 'ح': 'h', 'خ': 'kh', 'د': 'd', 'ذ': 'z', 'ر': 'r', 'ز': 'z',
+                    'س': 's', 'ش': 'sh', 'ص': 's', 'ض': 'd', 'ط': 't', 'ظ': 'z', 'ع': 'a',
+                    'غ': 'gh', 'ف': 'f', 'ق': 'q', 'ك': 'k', 'ل': 'l', 'م': 'm', 'ن': 'n',
+                    'ه': 'h', 'و': 'w', 'ي': 'y', 'ى': 'a', 'ة': 'a', 'ء': '', 'ئ': 'e',
+                    'ؤ': 'o', ' ': ' ', 'ـ': ''
+                };
+                return text.split('').map(c => map[c] || c).join('');
+            }
+
+            // Initial Render call
+            renderBarcode();
+        }
+
+        // ---------------------------------------------------------
+        // Dynamic Barcode & Contract Mode Logic (Global Scope)
+        // ---------------------------------------------------------
+        let currentBarcodeType = 'verify'; // Default
+        let contractMode = 'ajeer'; // 'ajeer' or 'istiaara'
+
+        // Toggle Contract Mode (Ajeer vs Istiaara)
+        function toggleContractMode() {
+            contractMode = (contractMode === 'ajeer') ? 'istiaara' : 'ajeer';
+
+            const content = document.getElementById('contract-content');
+            const title = document.getElementById('data-contractType'); // Header title
+            const modeText = document.getElementById('contract-mode-text'); // Button text
+            const contractTypeLabel = document.getElementById('data-contractSummary'); // "نبذة عن التعاقد" field
+
+            if (contractMode === 'istiaara') {
+                content.classList.add('istiaara');
+                if (title) title.innerText = "تصريح أجير - الإعارة";
+                if (modeText) modeText.innerText = "إعارة";
+                // Optionally update summary text if needed/requested
+                // if(contractTypeLabel) contractTypeLabel.innerText = "تعاقد إعارة لخدمات العمالة";
+            } else {
+                content.classList.remove('istiaara');
+                if (title) title.innerText = "تصريح أجير - تعاقد أجير";
+                if (modeText) modeText.innerText = "تعاقد أجير";
+                // if(contractTypeLabel) contractTypeLabel.innerText = "تعاقد خدمات العمالة";
+            }
+        }
+
+        function updateBarcodeType(type) {
+            currentBarcodeType = type;
+            renderBarcode();
+        }
+
+        function toggleMobileBarcode() {
+            currentBarcodeType = (currentBarcodeType === 'verify') ? 'data' : 'verify';
+
+            // Update mobile button label
+            const label = document.getElementById('mobile-barcode-label');
+            if (label) label.innerText = (currentBarcodeType === 'verify') ? 'تغيير إلى البيانات' : 'تغيير إلى التحقق';
+
+            renderBarcode();
+
+            // Sync desktop selector if exists
+            const selector = document.getElementById('barcodeType');
+            if (selector) selector.value = currentBarcodeType;
+        }
+
+        function renderBarcode() {
+            if (!currentContract) return;
+
+            const container = document.getElementById("qrcode-display");
+            if (!container) return;
+
+            // Clear previous
+            container.innerHTML = '';
+
+            // 1. Web Barcode: Direct Link to Verification Page
+            const productionUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
+            const verifyUrl = `${productionUrl}/verify.html?id=${currentContract.id}`;
+
+            // 2. Text Barcode: JSON Data
+            let status = "ساري";
+            if (currentContract.isBlocked) {
+                status = "موقوف";
+            } else {
+                const today = new Date();
+                const end = new Date(currentContract.endDate);
+                if (end < today) {
+                    status = "منتهي";
+                }
+            }
+
+            const dataObject = {
+                "id_number": currentContract.workerIdNumber || "",
+                "occupation": currentContract.workerProfession || "",
+                "status": status,
+                "issue_date": currentContract.startDate || "",
+                "expiry_date": currentContract.endDate || ""
+            };
+            const dataText = JSON.stringify(dataObject);
+
+            // Generate QR based on type
+            let qr;
+            if (currentBarcodeType === 'verify') {
+                qr = qrcode(0, 'L');
+                qr.addData(verifyUrl);
+            } else {
+                qr = qrcode(0, 'M'); // Higher correction for text
+                // Fix for Arabic/UTF-8 support
+                qr.addData(unescape(encodeURIComponent(dataText)));
+            }
+
+            qr.make();
+            const imgTag = qr.createImgTag(4, 0); // 4 = cell size
+
+            if (currentBarcodeType === 'verify') {
+                container.innerHTML = `<a href="${verifyUrl}" target="_blank" style="cursor: pointer; display: block; height: 100%;">${imgTag}</a>`;
+            } else {
+                container.innerHTML = imgTag;
+            }
+
+            // Style the image
+            const img = container.querySelector('img');
+            if (img) {
+                img.style.width = '100%';
+                img.style.height = '100%';
+                // img.style.borderRadius = '8px';
+            }
+        }
+
+        async function downloadPDF() {
+            const workerName = currentContract?.workerName || 'عقد';
+            const element = document.getElementById('contract-page');
+
+            // Show loading
+            const btn = event.target.closest('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="bi bi-hourglass-split"></i> جاري التحميل...';
+            btn.disabled = true;
+
+            // Hide action buttons during capture
+            const actionButtons = document.querySelector('.action-buttons');
+            if (actionButtons) actionButtons.style.display = 'none';
+
+            // Wait for DOM to stabilize
+            await new Promise(resolve => setTimeout(resolve, 300));
+
+            try {
+                // Link positions (manual addition)
+                const qrLink = document.querySelector('#qrcode-display a');
+                const footerLink = document.querySelector('.footer a');
+                const qrUrl = qrLink ? qrLink.href : null;
+                const footerUrl = footerLink ? footerLink.href : null;
+
+                // Wait for fonts to be ready
+                await document.fonts.ready;
+
+                // Capture using html2canvas - Optimized for Arabic shaping
+                const canvas = await html2canvas(element, {
+                    scale: 3,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff',
+                    width: 794,
+                    windowWidth: 794,
+                    onclone: (clonedDoc) => {
+                        const clonedElement = clonedDoc.getElementById('contract-page');
+                        clonedElement.style.direction = 'rtl';
+                        clonedElement.style.fontFamily = "'Cairo', sans-serif";
+
+                        // Critical fix for Arabic shaping in html2canvas:
+                        // Force normal letter-spacing on all text elements except the contract number
+                        const allElements = clonedDoc.querySelectorAll('#contract-page *');
+                        allElements.forEach(el => {
+                            if (!el.classList.contains('contract-number')) {
+                                el.style.letterSpacing = '0px';
+                                el.style.wordSpacing = 'normal';
+                            }
+                        });
+                    }
+                });
+
+                // PDF Setup
+                const { jsPDF } = window.jspdf;
+                const imgWidth = 210; // A4
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4',
+                    compress: true
+                });
+
+                const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+
+                // Add links manually in the same relative positions
+                if (qrUrl && qrLink) {
+                    const qrRect = qrLink.getBoundingClientRect();
+                    const containerRect = element.getBoundingClientRect();
+                    const scale = imgWidth / containerRect.width;
+                    pdf.link((qrRect.left - containerRect.left) * scale, (qrRect.top - containerRect.top) * scale, qrRect.width * scale, qrRect.height * scale, { url: qrUrl });
+                }
+
+                if (footerUrl && footerLink) {
+                    const linkRect = footerLink.getBoundingClientRect();
+                    const containerRect = element.getBoundingClientRect();
+                    const scale = imgWidth / containerRect.width;
+                    pdf.link((linkRect.left - containerRect.left) * scale, (linkRect.top - containerRect.top) * scale, linkRect.width * scale, linkRect.height * scale, { url: footerUrl });
+                }
+
+                pdf.save(`${workerName}.pdf`);
+
+            } catch (error) {
+                console.error('PDF generation error:', error);
+                alert('حدث خطأ أثناء إنشاء ملف PDF');
+            } finally {
+                // Restore UI
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                if (actionButtons) actionButtons.style.display = '';
+            }
+        }
+    </script>
+</body>
+
+</html>

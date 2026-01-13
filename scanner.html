@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مسح الباركود - أجير</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --ajeer-gradient: linear-gradient(135deg, #38bdf8 0%, #3b82f6 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+            --card-shadow: 0 15px 50px rgba(59, 130, 246, 0.2);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated background elements */
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.08;
+        }
+
+        body::before {
+            width: 500px;
+            height: 500px;
+            background: var(--ajeer-gradient);
+            top: -150px;
+            right: -150px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        body::after {
+            width: 400px;
+            height: 400px;
+            background: var(--ajeer-gradient);
+            bottom: -100px;
+            left: -100px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 30px) scale(1.05); }
+        }
+
+        .scanner-container {
+            background: white;
+            border-radius: 28px;
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .scanner-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .scanner-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--ajeer-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
+            }
+            50% {
+                box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
+            }
+        }
+
+        .scanner-icon i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .scanner-title {
+            color: #1e293b;
+            font-weight: 800;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .scanner-subtitle {
+            color: #64748b;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .instruction {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            color: #475569;
+            font-size: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #e0f2fe;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            animation: fadeIn 0.5s ease 0.2s backwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .instruction .camera-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--ajeer-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .instruction .camera-icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .instruction p {
+            margin: 0;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        #reader {
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease 0.3s backwards;
+        }
+
+        /* Override html5-qrcode styles */
+        #reader video {
+            border-radius: 16px;
+        }
+
+        #reader__scan_region {
+            background: #f8fafc !important;
+        }
+
+        #reader__dashboard_section_csr button {
+            background: var(--ajeer-gradient) !important;
+            border: none !important;
+            color: white !important;
+            padding: 12px 25px !important;
+            border-radius: 12px !important;
+            font-family: 'Cairo', sans-serif !important;
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            transition: var(--transition) !important;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3) !important;
+        }
+
+        #reader__dashboard_section_csr button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
+        }
+
+        #reader__dashboard_section_csr select {
+            padding: 10px 15px !important;
+            border-radius: 10px !important;
+            border: 2px solid #e2e8f0 !important;
+            font-family: 'Cairo', sans-serif !important;
+            font-weight: 600 !important;
+            transition: var(--transition) !important;
+        }
+
+        #reader__dashboard_section_csr select:focus {
+            border-color: var(--primary-color) !important;
+            outline: none !important;
+        }
+
+        .status-box {
+            padding: 18px 25px;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 16px;
+            display: none;
+            margin-top: 20px;
+            animation: fadeIn 0.3s ease;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .status-box.success {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            display: flex;
+        }
+
+        .status-box.error {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: flex;
+        }
+
+        .status-box i {
+            font-size: 22px;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            transition: var(--transition);
+            animation: fadeIn 0.5s ease 0.4s backwards;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .back-btn i {
+            font-size: 20px;
+        }
+
+        /* Footer Logo */
+        .footer-logo {
+            text-align: center;
+            margin-top: 25px;
+            animation: fadeIn 0.5s ease 0.5s backwards;
+        }
+
+        .footer-logo img {
+            height: 35px;
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .footer-logo img:hover {
+            opacity: 1;
+        }
+
+        @media (max-width: 576px) {
+            .scanner-container {
+                padding: 30px 20px;
+            }
+
+            .scanner-title {
+                font-size: 24px;
+            }
+
+            .scanner-icon {
+                width: 70px;
+                height: 70px;
+            }
+
+            .scanner-icon i {
+                font-size: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="scanner-container">
+        <div class="scanner-header">
+            <div class="scanner-icon">
+                <i class="bi bi-qr-code-scan"></i>
+            </div>
+            <h1 class="scanner-title">مسح الباركود</h1>
+            <p class="scanner-subtitle">قم بتوجيه الكاميرا نحو الباركود للتحقق من العقد</p>
+        </div>
+
+        <div class="instruction">
+            <div class="camera-icon">
+                <i class="bi bi-camera-fill"></i>
+            </div>
+            <p>وجه الكاميرا نحو رمز الاستجابة السريعة (QR Code) للتحقق من صحة العقد</p>
+        </div>
+
+        <div id="reader"></div>
+
+        <div id="statusBox" class="status-box"></div>
+
+        <a href="index.html" class="back-btn">
+            <i class="bi bi-arrow-right"></i>
+            العودة للصفحة الرئيسية
+        </a>
+
+        <div class="footer-logo">
+            <img src="img/logo_ajeer_new.png" alt="Ajeer Logo">
+        </div>
+    </div>
+
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script>
+        const statusBox = document.getElementById('statusBox');
+
+        function showStatus(message, isSuccess) {
+            statusBox.className = 'status-box ' + (isSuccess ? 'success' : 'error');
+            statusBox.innerHTML = `<i class="bi bi-${isSuccess ? 'check-circle-fill' : 'exclamation-triangle-fill'}"></i>${message}`;
+        }
+
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(`تم مسح الكود: ${decodedText}`);
+
+            // Stop scanning
+            html5QrcodeScanner.clear();
+
+            // Show success message
+            showStatus('تم مسح الباركود بنجاح! جاري التحويل...', true);
+
+            // Redirect to the scanned URL after 1.5 seconds
+            setTimeout(() => {
+                window.location.href = decodedText;
+            }, 1500);
+        }
+
+        function onScanFailure(error) {
+            // Handle scan failure silently (scanning continuously)
+            // console.warn(`فشل المسح: ${error}`);
+        }
+
+        // Initialize QR Scanner
+        const html5QrcodeScanner = new Html5QrcodeScanner(
+            "reader",
+            {
+                fps: 10,
+                qrbox: { width: 250, height: 250 },
+                rememberLastUsedCamera: true,
+                aspectRatio: 1.0,
+                showTorchButtonIfSupported: true
+            },
+            false
+        );
+
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+        // Handle camera permission errors
+        setTimeout(() => {
+            const errorElement = document.querySelector('#reader__status_span');
+            if (errorElement && errorElement.textContent.includes('NotAllowedError')) {
+                showStatus('يرجى السماح بالوصول إلى الكاميرا', false);
+            }
+        }, 2000);
+    </script>
+</body>
+
+</html>

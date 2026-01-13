@@ -1,0 +1,663 @@
+/* ============================================
+   Ajeer Premium Design System
+   Theme: Royal Indigo & Slate
+   Standard: Senior Frontend
+   ============================================ */
+
+:root {
+    /* Brand Colors - Premium Indigo */
+    --primary-50: #eef2ff;
+    --primary-100: #e0e7ff;
+    --primary-200: #c7d2fe;
+    --primary-300: #a5b4fc;
+    --primary-400: #818cf8;
+    --primary-500: #6366f1;
+    --primary-600: #4f46e5;
+    /* Main Brand Color */
+    --primary-700: #4338ca;
+    --primary-800: #3730a3;
+    --primary-900: #312e81;
+
+    /* Secondary Colors - Professional Slate */
+    --slate-50: #f8fafc;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    /* Headings */
+    --slate-800: #1e293b;
+    --slate-900: #0f172a;
+
+    /* Semantic Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #06b6d4;
+
+    /* Backgrounds */
+    --bg-body: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #ffffff;
+
+    /* Text */
+    --text-primary: var(--slate-800);
+    --text-secondary: var(--slate-500);
+    --text-tertiary: var(--slate-400);
+
+    /* Shadows - Soft & Multi-layered */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-brand: 0 10px 30px -10px rgba(79, 70, 229, 0.4);
+    /* Indigo Glow */
+
+    /* Borders & Radius */
+    --border-color: var(--slate-200);
+    --radius-sm: 0.375rem;
+    --radius: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+
+    /* Transitions */
+    --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Elite Design Tokens */
+    --elite-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04), 0 20px 50px -20px rgba(0, 0, 0, 0.06);
+    --elite-shadow-hover: 0 30px 60px -15px rgba(0, 0, 0, 0.1), 0 20px 40px -20px rgba(0, 0, 0, 0.05);
+    --glass-surface: rgba(255, 255, 255, 0.95);
+    --accent-glow: 0 0 30px -5px rgba(99, 102, 241, 0.2);
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+body {
+    font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.6;
+    direction: rtl;
+    text-align: right;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--slate-900);
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+/* ============================================
+   Components: Buttons
+   ============================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background-color: var(--primary-600);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-700);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: white;
+    border-color: var(--slate-200);
+    color: var(--slate-700);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+    background-color: var(--slate-50);
+    border-color: var(--slate-300);
+    color: var(--slate-900);
+}
+
+.btn-danger {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #fecaca;
+    color: #991b1b;
+}
+
+.btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border-radius: var(--radius);
+}
+
+/* ============================================
+   Components: Cards
+   ============================================ */
+.card {
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-200);
+}
+
+.card-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Stat Cards */
+.stat-card {
+    position: relative;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: white;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-300);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--slate-900);
+    margin: 0.5rem 0;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.stat-icon {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    background: var(--primary-50);
+    color: var(--primary-600);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+/* ============================================
+   Components: Form Inputs
+   ============================================ */
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--slate-700);
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--slate-200);
+    background-color: white;
+    color: var(--slate-900);
+    font-family: inherit;
+    transition: var(--transition);
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 4px var(--primary-100);
+}
+
+.form-control::placeholder {
+    color: var(--slate-400);
+}
+
+/* Input Group */
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group-text {
+    background-color: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-left: 0;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    display: flex;
+    align-items: center;
+    padding: 0.375rem 0.75rem;
+    color: var(--slate-500);
+}
+
+.input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* ============================================
+   Components: Badges & Tables
+   ============================================ */
+.badge {
+    padding: 0.35em 0.8em;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 99px;
+    letter-spacing: 0.025em;
+}
+
+.bg-success-soft {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.bg-danger-soft {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.bg-primary-soft {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table-custom th {
+    background-color: var(--slate-50);
+    color: var(--slate-600);
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    text-align: right;
+    border-bottom: 1px solid var(--slate-200);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table-custom td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--slate-100);
+    color: var(--slate-600);
+    vertical-align: middle;
+}
+
+.table-custom tr:last-child td {
+    border-bottom: none;
+}
+
+.table-custom tr:hover td {
+    background-color: var(--slate-50);
+}
+
+/* ============================================
+   Page: Login Modernization
+   ============================================ */
+.login-page {
+    background-color: var(--slate-50);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card-modern {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 3rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg), var(--shadow-brand);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, var(--primary-500), var(--primary-300));
+}
+
+.brand-logo-container {
+    width: 80px;
+    height: 80px;
+    background: var(--primary-50);
+    color: var(--primary-600);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2.5rem;
+    transform: rotate(-5deg);
+    transition: var(--transition);
+}
+
+.login-card-modern:hover .brand-logo-container {
+    transform: rotate(0) scale(1.1);
+    background: var(--primary-100);
+}
+
+/* ============================================
+   Page: Navbar
+   ============================================ */
+.premium-navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.premium-navbar .nav-link {
+    color: var(--slate-600);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+
+.premium-navbar .nav-link:hover,
+.premium-navbar .nav-link.active {
+    color: var(--primary-600);
+    background: var(--primary-50);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* ============================================
+   Elite Contract Cards (Senior Level)
+   ============================================ */
+.elite-card {
+    background: var(--glass-surface);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5) !important;
+    border-radius: 42px !important;
+    box-shadow: var(--elite-shadow) !important;
+    transition: var(--transition) !important;
+    position: relative;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.elite-card:hover {
+    transform: translateY(-16px) scale(1.01);
+    box-shadow: var(--elite-shadow-hover) !important;
+}
+
+.card-inner {
+    position: relative;
+    z-index: 1;
+    background: white;
+    border-radius: 34px;
+    padding: 28px;
+    height: 100%;
+}
+
+.elite-badge {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 24px;
+}
+
+.avatar-ring {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    border: 2px dashed var(--primary-100);
+    animation: rotateRing 30s linear infinite;
+}
+
+@keyframes rotateRing {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    background: #f8fafc;
+    border-radius: 24px;
+    border: 1px solid #f1f5f9;
+    transition: var(--transition);
+    margin-bottom: 12px;
+}
+
+.info-item:hover {
+    background: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02);
+    transform: translateX(-6px);
+    border-color: var(--primary-100);
+}
+
+.info-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f1f5f9;
+    color: var(--slate-400);
+}
+
+.elite-action-btn {
+    background: linear-gradient(135deg, var(--slate-900) 0%, var(--slate-800) 100%);
+    color: white !important;
+    border-radius: 22px !important;
+    padding: 16px 28px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.3) !important;
+    width: 100%;
+    transition: var(--transition) !important;
+}
+
+.elite-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.4) !important;
+    filter: brightness(1.1);
+}
+
+.elite-circle-btn {
+    width: 52px;
+    height: 52px;
+    background: white;
+    border: 1px solid #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--slate-600);
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.elite-circle-btn:hover {
+    background: var(--slate-50);
+    transform: rotate(15deg);
+    color: var(--primary-600);
+}
+
+.micro-actions-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.micro-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: var(--transition);
+    background: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.micro-btn:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+}
+
+.micro-btn-blue {
+    color: #3b82f6;
+}
+
+.micro-btn-blue:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.micro-btn-amber {
+    color: #f59e0b;
+}
+
+.micro-btn-amber:hover {
+    background: #fffbeb;
+    border-color: #fef3c7;
+}
+
+.micro-btn-emerald {
+    color: #10b981;
+}
+
+.micro-btn-emerald:hover {
+    background: #ecfdf5;
+    border-color: #d1fae5;
+}
+
+.micro-btn-rose {
+    color: #f43f5e;
+}
+
+.micro-btn-rose:hover {
+    background: #fff1f2;
+    border-color: #fecdd3;
+}

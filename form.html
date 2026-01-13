@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4f46e5">
+    <title>بيانات العقد - أجير</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-body pb-5">
+
+    <!-- Header -->
+    <div class="premium-navbar py-3 mb-4 shadow-sm border-bottom bg-white sticky-top">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h5 fw-bold mb-0 d-flex align-items-center gap-2" id="formTitle">
+                    <span
+                        class="rounded-circle bg-primary-50 text-primary d-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px;">
+                        <i class="bi bi-file-earmark-plus-fill"></i>
+                    </span>
+                    <span>عقد جديد</span>
+                </h2>
+                <a href="index.html" class="btn btn-secondary btn-sm" title="عودة">
+                    <i class="bi bi-arrow-right me-1"></i>
+                    <span class="d-none d-sm-inline">عودة للقائمة</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="max-width: 900px; padding-bottom: 120px !important;">
+
+        <form id="contractForm" onsubmit="handleSave(event)" class="animate-fade-up">
+            <input type="hidden" id="id" name="id">
+
+            <!-- Contract Type -->
+            <div class="card mb-4" style="overflow: visible;">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-file-text text-primary"></i>
+                        نوع العقد
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">نوع التعاقد <span class="text-danger">*</span></label>
+                        <select class="form-select form-select-lg" name="contractType" required>
+                            <option value="">اختر نوع التعاقد</option>
+                            <option value="تعاقد أجير" selected>تعاقد أجير</option>
+                            <option value="تعاقد استعارة">تعاقد استعارة</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Worker Data -->
+            <div class="card mb-4">
+                <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-person-vcard text-primary"></i>
+                        بيانات العامل
+                    </h5>
+                    <span class="badge bg-danger-soft">مطلوب</span>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">اسم العامل <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control" name="workerName" required
+                                    placeholder="الاسم الكامل">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">المهنة <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-briefcase"></i></span>
+                                <input type="text" class="form-control" name="workerProfession" required
+                                    placeholder="مثال: عامل">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">رقم الهوية / الإقامة <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-card-heading"></i></span>
+                                <input type="text" class="form-control" name="workerIdNumber" required
+                                    placeholder="رقم الهوية">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">الجنسية <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-flag"></i></span>
+                                <input type="text" class="form-control" name="workerNationality" required
+                                    placeholder="الجنسية">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parties -->
+            <div class="row g-4 mb-4">
+                <!-- Provider -->
+                <div class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                                <i class="bi bi-building text-primary"></i>
+                                مقدم الخدمة
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">اسم المنشأة</label>
+                                <input type="text" class="form-control" name="providerEntity"
+                                    placeholder="اسم المنشأة المقدمة">
+                            </div>
+                            <div class="mb-0">
+                                <label class="form-label">رقم المنشأة (سجل تجاري/موحد)</label>
+                                <input type="text" class="form-control" name="providerHrId" placeholder="رقم السجل">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Beneficiary -->
+                <div class="col-12 col-lg-6">
+                    <div class="card h-100">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                                <i class="bi bi-building-check text-primary"></i>
+                                المستفيد
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">اسم المنشأة</label>
+                                <input type="text" class="form-control" name="beneficiaryEntity"
+                                    placeholder="اسم المنشأة المستفيدة">
+                            </div>
+                            <div class="mb-0">
+                                <label class="form-label">رقم المنشأة (سجل تجاري/موحد)</label>
+                                <input type="text" class="form-control" name="beneficiaryHrId" placeholder="رقم السجل">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contract Details -->
+            <div class="card mb-5">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                        <i class="bi bi-info-circle text-primary"></i>
+                        تفاصيل العقد والتصريح
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <label class="form-label">نبذة عن التعاقد</label>
+                        <textarea class="form-control" name="contractSummary" rows="3"
+                            placeholder="وصف مختصر لطبيعة العمل..."></textarea>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <div class="col-6">
+                            <label class="form-label">تاريخ البداية</label>
+                            <input type="date" class="form-control" name="startDate">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">تاريخ النهاية</label>
+                            <input type="date" class="form-control" name="endDate">
+                        </div>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">مواقع العمل</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                            <input type="text" class="form-control" name="workLocations" placeholder="الرياض، جدة، ...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spacer to prevent footer overlap -->
+            <div style="height: 150px;"></div>
+
+            <!-- Sticky Actions Footer -->
+            <div class="position-fixed bottom-0 start-0 end-0 bg-white border-top p-3 shadow-lg form-actions-container"
+                style="z-index: 1000;">
+                <div class="container" style="max-width: 900px;">
+                    <div class="d-flex gap-2">
+                        <a href="index.html" class="btn btn-secondary flex-grow-1 flex-md-grow-0 px-md-5">
+                            إلغاء
+                        </a>
+                        <button type="submit" class="btn btn-primary flex-grow-1 px-md-5 shadow-brand">
+                            <i class="bi bi-check2-circle me-2"></i> حفظ العقد
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/app.js"></script>
+    <script src="js/reminder.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (id) {
+                document.getElementById('formTitle').innerHTML = '<i class="bi bi-pencil-square"></i><span>تعديل العقد</span>';
+                loadContractData(id);
+            }
+        });
+
+        async function loadContractData(id) {
+            const contract = await StorageManager.getContract(id);
+            if (!contract) {
+                showToast('العقد غير موجود', 'error');
+                setTimeout(() => window.location.href = 'index.html', 2000);
+                return;
+            }
+
+            // Populate form fields
+            const form = document.getElementById('contractForm');
+            Object.keys(contract).forEach(key => {
+                const input = form.elements[key];
+                if (input) {
+                    input.value = contract[key];
+                }
+            });
+        }
+
+        async function handleSave(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            // Validate required worker fields
+            const requiredWorkerFields = [
+                { name: 'workerName', label: 'اسم العامل' },
+                { name: 'workerProfession', label: 'المهنة' },
+                { name: 'workerIdNumber', label: 'رقم الهوية' },
+                { name: 'workerNationality', label: 'الجنسية' }
+            ];
+
+            const missingFields = requiredWorkerFields.filter(field => !data[field.name] || data[field.name].trim() === '');
+
+            if (missingFields.length > 0) {
+                const fieldNames = missingFields.map(f => f.label).join('، ');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'بيانات ناقصة',
+                    html: `أكمل البيانات:<br><strong>${fieldNames}</strong>`,
+                    confirmButtonText: 'حسناً',
+                    confirmButtonColor: '#3b82f6'
+                });
+                return;
+            }
+
+            // Clean up empty ID if new
+            if (!data.id) delete data.id;
+
+            try {
+                await StorageManager.saveContract(data);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم الحفظ!',
+                    text: 'تم حفظ بيانات العقد بنجاح',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = 'index.html';
+                });
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'حدث خطأ أثناء الحفظ',
+                    confirmButtonColor: '#3b82f6'
+                });
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+
+</html>

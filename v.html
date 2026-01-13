@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        // Get contract ID from URL and redirect to verify page
+        const id = new URLSearchParams(window.location.search).get('i');
+        if (id) {
+            window.location.href = 'verify.html?id=' + id;
+        } else {
+            document.body.innerHTML = 'Invalid link';
+        }
+    </script>
+</head>
+<body>Redirecting...</body>
+</html>
