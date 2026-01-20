@@ -108,13 +108,17 @@
             justify-content: flex-start;
             margin-bottom: 15px;
             font-size: 15px;
+            gap: 10px;
+            /* Space between label and value */
         }
 
         .data-label {
-            width: 170px;
+            /* width removed to let it fit content */
             color: #616161;
             font-weight: 600;
             flex-shrink: 0;
+            margin-left: 0;
+            /* Clear previous margins if any */
         }
 
         .data-value {
@@ -134,15 +138,11 @@
         }
 
         @media (max-width: 600px) {
-            .data-item {
-                flex-direction: column;
-                margin-bottom: 12px;
-            }
 
+            /* Kept empty or minimal adjustements if needed, removing column stack */
             .data-label {
-                width: 100%;
-                margin-bottom: 2px;
                 font-size: 13px;
+                /* width: 100px;  Optional: adjust width if needed for mobile */
             }
 
             .data-value {
