@@ -612,7 +612,8 @@
 
             // QR Code generation - Link to the NEW dedicated health verification portal
             const certId = id || '000000';
-            const portalUrl = window.location.origin + '/health/health-verify.html';
+            const productionUrl = 'https://balady-ajeer43.vercel.app';
+            const portalUrl = productionUrl + '/health/health-verify.html';
             const qrUrl = `${portalUrl}?id=${encodeURIComponent(btoa(certId))}`;
 
             const qrContainer = document.getElementById("qrcode");

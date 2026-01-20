@@ -1190,7 +1190,9 @@
             container.innerHTML = '';
 
             // 1. Web Barcode: Direct Link to Verification Page
-            const verifyUrl = window.location.origin + `/ajeer/verify.html?id=${currentContract.id}`;
+            // Production URL fixed for stability
+            const productionUrl = 'https://balady-ajeer43.vercel.app';
+            const verifyUrl = productionUrl + `/ajeer/verify.html?id=${currentContract.id}`;
 
             // 2. Text Barcode: JSON Data
             let status = "ساري";
