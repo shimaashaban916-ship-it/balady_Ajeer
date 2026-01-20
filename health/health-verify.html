@@ -94,7 +94,7 @@
 
         .data-divider {
             height: 2px;
-            background-color: #333;
+            background-color: #d3d3d3;
             margin-bottom: 20px;
             opacity: 0.9;
         }
@@ -105,19 +105,16 @@
 
         .data-item {
             display: flex;
-            flex-direction: column;
-            /* Stack vertically */
+            justify-content: flex-start;
             margin-bottom: 15px;
             font-size: 15px;
         }
 
         .data-label {
-            width: 100%;
-            /* Full width */
+            width: 170px;
             color: #616161;
             font-weight: 600;
-            margin-bottom: 5px;
-            /* Space between label and value */
+            flex-shrink: 0;
         }
 
         .data-value {
@@ -284,20 +281,20 @@
         });
 
         function renderData(cert) {
-            document.getElementById('vCertNo').textContent = cert.certificateNumber || '--';
-            document.getElementById('vIssueDate').textContent = cert.issueDate || '--';
-            document.getElementById('vExpiryDate').textContent = cert.expiryDate || '--';
+            document.getElementById('vCertNo').textContent = cert.certificateNumber || '';
+            document.getElementById('vIssueDate').textContent = cert.issueDate || '';
+            document.getElementById('vExpiryDate').textContent = cert.expiryDate || '';
 
-            document.getElementById('vName').textContent = cert.holderName || '--';
-            document.getElementById('vIdn').textContent = cert.idn || '--';
-            document.getElementById('vGender').textContent = cert.gender || '--';
-            document.getElementById('vNationality').textContent = cert.nationality || '--';
-            document.getElementById('vProf').textContent = cert.profession || '--';
-            document.getElementById('vProg').textContent = cert.programName || 'غير متاح';
-            document.getElementById('vProgEnd').textContent = cert.programEndDate || '--';
+            document.getElementById('vName').textContent = cert.holderName || '';
+            document.getElementById('vIdn').textContent = cert.idn || '';
+            document.getElementById('vGender').textContent = cert.gender || '';
+            document.getElementById('vNationality').textContent = cert.nationality || '';
+            document.getElementById('vProf').textContent = cert.profession || '';
+            document.getElementById('vProg').textContent = cert.programName || '';
+            document.getElementById('vProgEnd').textContent = cert.programEndDate || '';
 
-            document.getElementById('vFacName').textContent = cert.facilityName || '--';
-            document.getElementById('vFacLic').textContent = cert.facilityLicense || '--';
+            document.getElementById('vFacName').textContent = cert.facilityName || '';
+            document.getElementById('vFacLic').textContent = cert.facilityLicense || '';
 
             if (cert.photoUrl) {
                 const img = document.getElementById('personalImg');

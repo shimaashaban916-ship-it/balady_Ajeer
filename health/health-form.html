@@ -54,19 +54,19 @@
                 <div class="card-body">
                     <div class="mb-3">
                         <input type="text" class="form-control text-end" name="certificateNumber"
-                            placeholder="رقم الشهادة (مثل: 8543-1447)" required>
+                            placeholder="رقم الشهادة (مثل: 8543-1447)">
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control text-end" name="issueDate"
-                            placeholder="تاريخ الإصدار (1447/07/26)" required>
+                            placeholder="تاريخ الإصدار (1447/07/26)">
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control text-end" name="issuer" value="أمانة منطقة الرياض"
-                            placeholder="أمانة المنقطة" required>
+                            placeholder="أمانة المنقطة">
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control text-end" name="expiryDate"
-                            placeholder="نهاية الصلاحية (1448/07/26)" required>
+                            placeholder="نهاية الصلاحية (1448/07/26)">
                     </div>
                 </div>
             </div>
@@ -81,10 +81,10 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="holderName" placeholder="الاسم الكامل" required>
+                        <input type="text" class="form-control" name="holderName" placeholder="الاسم الكامل">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="idn" placeholder="رقم الهوية" required>
+                        <input type="text" class="form-control" name="idn" placeholder="رقم الهوية">
                     </div>
 
                     <div class="mb-3">
@@ -104,10 +104,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="nationality" placeholder="الجنسية" required>
+                        <input type="text" class="form-control" name="nationality" placeholder="الجنسية">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="profession" placeholder="المهنة" required>
+                        <input type="text" class="form-control" name="profession" placeholder="المهنة">
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control" name="programName" placeholder="البرنامج التثقيفي">
@@ -131,11 +131,10 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="facilityName" placeholder="اسم المنشأة" required>
+                        <input type="text" class="form-control" name="facilityName" placeholder="اسم المنشأة">
                     </div>
                     <div class="mb-3">
-                        <input type="text" class="form-control" name="facilityLicense" placeholder="رقم رخصة المنشأة"
-                            required>
+                        <input type="text" class="form-control" name="facilityLicense" placeholder="رقم رخصة المنشأة">
                     </div>
                 </div>
             </div>
@@ -259,15 +258,9 @@
             // Set Program End Date with current time
             const programEndInput = document.getElementById('programEndDate');
             if (programEndInput) {
-                const now = new Date();
-                const hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const seconds = now.getSeconds().toString().padStart(2, '0');
-                const period = hours >= 12 ? 'م' : 'ص';
-                const hour12 = hours % 12 || 12;
-
                 // Format: ص 10:01:00 25/12/50
-                programEndInput.value = `${period} ${hour12}:${minutes}:${seconds} ${d}/${m}/${y}`;
+                // Default value requested by user: ص 10:01:00 25/12/50
+                programEndInput.value = 'ص 10:01:00 25/12/50';
             }
         }
 
@@ -297,10 +290,13 @@
             const data = Object.fromEntries(formData.entries());
 
             // Basic validation
+            // Validation removed as per user request (allow empty fields)
+            /*
             if (!data.certificateNumber || !data.holderName) {
                 Swal.fire('خطأ', 'يرجى تعبئة الحقول المطلوبة', 'error');
                 return;
             }
+            */
 
             // Handle Photo Upload (Resize & Base64)
             const photoInput = form.querySelector('input[name="photo"]');
