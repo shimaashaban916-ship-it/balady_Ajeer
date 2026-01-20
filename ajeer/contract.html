@@ -1206,14 +1206,15 @@
                 }
             }
 
-            const dataObject = {
-                "id_number": currentContract.workerIdNumber || "",
-                "occupation": currentContract.workerProfession || "",
-                "status": status,
-                "issue_date": currentContract.startDate || "",
-                "expiry_date": currentContract.endDate || ""
-            };
-            const dataText = JSON.stringify(dataObject);
+            // Manually build JSON string to guarantee order and LTR-friendly layout
+            // \u202D (LRO) forces Left-to-Right display. \u200E (LRM) isolates Arabic text.
+            const dataText = '\u202D' + '{' +
+                `"id_number":"${currentContract.workerIdNumber || ""}", ` +
+                `"occupation":"\u200E${currentContract.workerProfession || ""}", ` +
+                `"status":"\u200E${status}", ` +
+                `"issue_date":"${currentContract.startDate ? formatDate(currentContract.startDate) : ""}", ` +
+                `"expiry_date":"${currentContract.endDate ? formatDate(currentContract.endDate) : ""}"` +
+                '}' + '\u202C';
 
             // Generate QR based on type
             let qr;
