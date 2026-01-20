@@ -133,7 +133,7 @@
                         <i class="bi bi-arrow-left-right"></i>
                     </div>
                     <div class="stat-value" id="stat-loan">0</div>
-                    <div class="stat-label">تعاقد استعارة</div>
+                    <div class="stat-label">تعاقد إعارة</div>
                 </div>
             </div>
         </div>
@@ -159,7 +159,7 @@
                                     id="filterType" style="font-size: 1rem;">
                                     <option value="">كل أنواع العقود</option>
                                     <option value="تعاقد أجير">تعاقد أجير</option>
-                                    <option value="تعاقد استعارة">تعاقد استعارة</option>
+                                    <option value="تعاقد إعارة">تعاقد إعارة</option>
                                 </select>
                             </div>
                             <button class="btn btn-primary btn-lg rounded-4 shadow-brand px-4" onclick="applyFilters()"
@@ -455,7 +455,7 @@
                 const type = c.contractType || 'تعاقد أجير';
                 if (type === 'تعاقد أجير') {
                     ajeerCount++;
-                } else if (type === 'استعارة' || type === 'تعاقد استعارة') {
+                } else if (type === 'إعارة' || type === 'تعاقد إعارة' || type === 'استعارة') {
                     loanCount++;
                 }
             });

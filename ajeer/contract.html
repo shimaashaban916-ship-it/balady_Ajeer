@@ -990,7 +990,7 @@
 
             // Check if it's Istiaara (borrowing) contract - remove shading
             const isIstiaara = currentContract.contractType &&
-                (currentContract.contractType.includes('استعارة') || currentContract.contractType.includes('تعاقد استعارة'));
+                (currentContract.contractType.includes('إعارة') || currentContract.contractType.includes('تعاقد إعارة') || currentContract.contractType.includes('استعارة'));
             if (isIstiaara) {
                 document.getElementById('contract-content').classList.add('istiaara');
             }
