@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستعلام عن الشهادة الصحية - أمانة منطقة الرياض</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-green: #007E3A;
+            --border-gray: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .verify-page {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        .header-balady {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .municipality-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            color: var(--primary-green);
+            font-weight: 800;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .balady-logo-small {
+            height: 35px;
+            width: auto;
+        }
+
+        .holder-photo-frame {
+            width: 125px;
+            height: 125px;
+            margin: 0 auto 10px;
+            border: 1px solid #ddd;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .holder-photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .page-indicator {
+            color: var(--primary-green);
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+        .main-info-card {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .group-title {
+            color: var(--primary-green);
+            font-weight: 800;
+            font-size: 20px;
+            margin-bottom: 12px;
+            text-align: right;
+        }
+
+        .data-divider {
+            height: 2px;
+            background-color: #333;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .data-grid {
+            margin-bottom: 35px;
+        }
+
+        .data-item {
+            display: flex;
+            flex-direction: column;
+            /* Stack vertically */
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .data-label {
+            width: 100%;
+            /* Full width */
+            color: #616161;
+            font-weight: 600;
+            margin-bottom: 5px;
+            /* Space between label and value */
+        }
+
+        .data-value {
+            color: #000;
+            font-weight: 800;
+        }
+
+        .error-box {
+            background-color: #fff9db;
+            color: #856404;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 50px;
+            border: 1px solid #ffeeba;
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            .data-item {
+                flex-direction: column;
+                margin-bottom: 12px;
+            }
+
+            .data-label {
+                width: 100%;
+                margin-bottom: 2px;
+                font-size: 13px;
+            }
+
+            .data-value {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="verify-page" id="pageContent" style="display: none;">
+        <div class="header-balady">
+            <div class="municipality-header">
+                <img src="/shared/img/balady.png" alt="Balady" class="balady-logo-small">
+                <span>أمانة منطقة الرياض</span>
+            </div>
+
+            <div class="holder-photo-frame">
+                <img id="personalImg" src="" alt="Photo" style="display: none;">
+                <i id="imgIcon" class="bi bi-person-fill text-muted" style="font-size: 65px;"></i>
+            </div>
+
+            <div class="page-indicator">شهادة صحية</div>
+        </div>
+
+        <div class="main-info-card">
+            <!-- Certificate Info -->
+            <div class="group-title">بيانات الشهادة:</div>
+            <div class="data-divider"></div>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="data-label">رقم الشهادة:</div>
+                    <div id="vCertNo" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">تاريخ الإصدار:</div>
+                    <div id="vIssueDate" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">نهاية الصلاحية:</div>
+                    <div id="vExpiryDate" class="data-value">--</div>
+                </div>
+            </div>
+
+            <!-- Holder Info -->
+            <div class="group-title">بيانات صاحب الشهادة:</div>
+            <div class="data-divider"></div>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="data-label">الاسم:</div>
+                    <div id="vName" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">رقم الهوية:</div>
+                    <div id="vIdn" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">الجنس:</div>
+                    <div id="vGender" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">الجنسية:</div>
+                    <div id="vNationality" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">المهنة:</div>
+                    <div id="vProf" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">البرنامج التثقيفي:</div>
+                    <div id="vProg" class="data-value">غير متاح</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">تاريخ انتهاء البرنامج:</div>
+                    <div id="vProgEnd" class="data-value">--</div>
+                </div>
+            </div>
+
+            <!-- Facility Info -->
+            <div class="group-title">بيانات المنشأة:</div>
+            <div class="data-divider"></div>
+            <div class="data-grid mb-0">
+                <div class="data-item">
+                    <div class="data-label">اسم المنشأة:</div>
+                    <div id="vFacName" class="data-value">--</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">رقم رخصة المنشأة:</div>
+                    <div id="vFacLic" class="data-value">--</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error View -->
+    <div id="errorView" class="verify-page" style="display: none;">
+        <div class="error-box">
+            عذراً، لم يتم العثور على بيانات لهذه الشهادة أو أن المعرف غير صحيح.
+        </div>
+    </div>
+
+    <!-- Logic -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/shared/js/supabase-config.js"></script>
+    <script src="/health/health-certificate-manager.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            let id = params.get('id');
+
+            if (!id) {
+                document.getElementById('errorView').style.display = 'block';
+                return;
+            }
+
+            try {
+                // Check if it's base64 (our standard for QR codes now)
+                // Base64 strings are usually longer and don't look like UUIDs (which have dashes)
+                if (id.length > 10 && !id.includes('-')) {
+                    const decoded = atob(decodeURIComponent(id));
+                    if (decoded) id = decoded;
+                }
+            } catch (e) {
+                console.warn("Id decoding result: using raw value", e);
+            }
+
+            const cert = await HealthStorageManager.getCertificate(id);
+
+            if (cert) {
+                renderData(cert);
+                document.getElementById('pageContent').style.display = 'block';
+            } else {
+                document.getElementById('errorView').style.display = 'block';
+            }
+        });
+
+        function renderData(cert) {
+            document.getElementById('vCertNo').textContent = cert.certificateNumber || '--';
+            document.getElementById('vIssueDate').textContent = cert.issueDate || '--';
+            document.getElementById('vExpiryDate').textContent = cert.expiryDate || '--';
+
+            document.getElementById('vName').textContent = cert.holderName || '--';
+            document.getElementById('vIdn').textContent = cert.idn || '--';
+            document.getElementById('vGender').textContent = cert.gender || '--';
+            document.getElementById('vNationality').textContent = cert.nationality || '--';
+            document.getElementById('vProf').textContent = cert.profession || '--';
+            document.getElementById('vProg').textContent = cert.programName || 'غير متاح';
+            document.getElementById('vProgEnd').textContent = cert.programEndDate || '--';
+
+            document.getElementById('vFacName').textContent = cert.facilityName || '--';
+            document.getElementById('vFacLic').textContent = cert.facilityLicense || '--';
+
+            if (cert.photoUrl) {
+                const img = document.getElementById('personalImg');
+                img.src = cert.photoUrl;
+                img.style.display = 'block';
+                document.getElementById('imgIcon').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

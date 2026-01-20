@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/login",
+      "destination": "/shared/login.html"
+    },
+    {
+      "source": "/",
+      "destination": "/shared/index.html"
+    },
+    {
+      "source": "/ajeer",
+      "destination": "/ajeer/ajeer-dashboard.html"
+    },
+    {
+      "source": "/health",
+      "destination": "/health/health-dashboard.html"
+    }
+  ]
+}

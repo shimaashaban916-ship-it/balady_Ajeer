@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#198754">
+    <title>إضافة شهادة جديدة - أمانة الرياض</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Cairo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/shared/css/style.css">
+</head>
+
+<body class="bg-body pb-5">
+
+    <!-- Header -->
+    <div class="premium-navbar py-3 mb-4 shadow-sm border-bottom bg-white sticky-top">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h5 fw-bold mb-0 d-flex align-items-center gap-2" id="formTitle">
+                    <span
+                        class="rounded-circle bg-success-soft text-success d-flex align-items-center justify-content-center"
+                        style="width: 40px; height: 40px; background-color: #d1e7dd; color: #198754;">
+                        <i class="bi bi-file-medical-fill"></i>
+                    </span>
+                    <span>إضافة شهادة جديدة</span>
+                </h2>
+                <a href="/health/health-dashboard.html" class="btn btn-secondary btn-sm" title="عودة">
+                    <i class="bi bi-arrow-right me-1"></i>
+                    <span class="d-none d-sm-inline">عودة للقائمة</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="max-width: 900px; padding-bottom: 120px !important;">
+
+        <form id="healthCertForm" onsubmit="handleSave(event)" class="animate-fade-up">
+            <input type="hidden" id="id" name="id">
+
+            <!-- Certificate Data -->
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2 text-dark">
+                        بيانات الشهادة
+                    </h5>
+                    <hr class="my-2">
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control text-end" name="certificateNumber"
+                            placeholder="رقم الشهادة (مثل: 8543-1447)" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control text-end" name="issueDate"
+                            placeholder="تاريخ الإصدار (1447/07/26)" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control text-end" name="issuer" value="أمانة منطقة الرياض"
+                            placeholder="أمانة المنقطة" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control text-end" name="expiryDate"
+                            placeholder="نهاية الصلاحية (1448/07/26)" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Holder Data -->
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2 text-dark">
+                        <i class="bi bi-person-fill"></i> بيانات صاحب الشهادة
+                    </h5>
+                    <hr class="my-2">
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="holderName" placeholder="الاسم الكامل" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="idn" placeholder="رقم الهوية" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label d-block text-end fw-bold">الجنس:</label>
+                        <div class="d-flex gap-4 justify-content-end">
+                            <div class="form-check">
+                                <input class="form-check-input float-end ms-2" type="radio" name="gender"
+                                    id="genderFemale" value="أنثى">
+                                <label class="form-check-label me-4" for="genderFemale">أنثى</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input float-end ms-2" type="radio" name="gender"
+                                    id="genderMale" value="ذكر" checked>
+                                <label class="form-check-label me-4" for="genderMale">ذكر</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="nationality" placeholder="الجنسية" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="profession" placeholder="المهنة" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="programName" placeholder="البرنامج التثقيفي">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-end d-block">تاريخ ووقت انتهاء البرنامج التثقيفي</label>
+                        <input type="text" id="programEndDate" class="form-control text-end" name="programEndDate"
+                            placeholder="ص 10:01:00 25/12/50" dir="ltr">
+                        <small class="text-muted">يتم ملؤه تلقائياً ويمكن التعديل عليه</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facility Data -->
+            <div class="card mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2 text-dark">
+                        بيانات المنشأة
+                    </h5>
+                    <hr class="my-2">
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="facilityName" placeholder="اسم المنشأة" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="facilityLicense" placeholder="رقم رخصة المنشأة"
+                            required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photos -->
+            <div class="card mb-5">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0 fw-bold d-flex align-items-center gap-2 text-dark">
+                        الصور
+                    </h5>
+                    <hr class="my-2">
+                </div>
+                <div class="card-body text-end">
+                    <div class="mb-3">
+                        <label class="form-label">صورة شخصية (اختياري)</label>
+                        <input type="file" class="form-control" name="photo" accept="image/*" id="photoInput">
+                    </div>
+                    <div id="photoPreview" class="mt-2 d-flex justify-content-end">
+                        <!-- Preview will appear here -->
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Spacer to prevent footer overlap -->
+            <div style="height: 150px;"></div>
+
+            <!-- Sticky Actions Footer -->
+            <div class="position-fixed bottom-0 start-0 end-0 bg-white border-top p-3 shadow-lg form-actions-container"
+                style="z-index: 1000;">
+                <div class="container" style="max-width: 900px;">
+                    <div class="d-flex gap-2">
+                        <a href="health-dashboard.html" class="btn btn-secondary flex-grow-1 flex-md-grow-0 px-md-5">
+                            إلغاء
+                        </a>
+                        <button type="submit" class="btn btn-success flex-grow-1 px-md-5 shadow-sm"
+                            style="background-color: #1ea36b; border-color: #1ea36b;">
+                            إضافة الشهادة
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/shared/js/supabase-config.js"></script>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/health/health-certificate-manager.js"></script>
+    <script src="/shared/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Photo Preview Logic
+            const photoInput = document.getElementById('photoInput');
+            const photoPreview = document.getElementById('photoPreview');
+
+            if (photoInput && photoPreview) {
+                photoInput.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            photoPreview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                        }
+                        reader.readAsDataURL(file);
+                    } else {
+                        photoPreview.innerHTML = '<i class="bi bi-camera text-muted fs-3"></i>';
+                    }
+                });
+            }
+
+            // Load ID if editing
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (id) {
+                document.getElementById('formTitle').innerHTML = '<span class="rounded-circle bg-success-soft text-success d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #d1e7dd; color: #198754;"><i class="bi bi-pencil-square"></i></span><span>تعديل الشهادة</span>';
+                loadCertificateData(id);
+            } else {
+                // Auto-fill for new certificate
+                autoFillDates();
+            }
+        });
+
+        function autoFillDates() {
+            const today = new Date();
+            const hijriFormatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+
+            // Format: MM/DD/YYYY -> switch to YYYY/MM/DD
+            const parts = hijriFormatter.formatToParts(today);
+            const y = parts.find(p => p.type === 'year').value;
+            const m = parts.find(p => p.type === 'month').value;
+            const d = parts.find(p => p.type === 'day').value;
+
+            const hijriDate = `${y}/${m}/${d}`;
+            const hijriDateNextYear = `${parseInt(y) + 1}/${m}/${d}`;
+
+            // Set Issue Date
+            const issueInput = document.getElementsByName('issueDate')[0];
+            if (issueInput) issueInput.value = hijriDate;
+
+            // Set Expiry Date
+            const expiryInput = document.getElementsByName('expiryDate')[0];
+            if (expiryInput) expiryInput.value = hijriDateNextYear;
+
+            // Set Certificate Number (Random 4 digits - Year)
+            const certInput = document.getElementsByName('certificateNumber')[0];
+            if (certInput) {
+                const random = Math.floor(1000 + Math.random() * 9000); // 4 digits
+                certInput.value = `${random}-${y}`;
+            }
+
+            // Set Program End Date with current time
+            const programEndInput = document.getElementById('programEndDate');
+            if (programEndInput) {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                const period = hours >= 12 ? 'م' : 'ص';
+                const hour12 = hours % 12 || 12;
+
+                // Format: ص 10:01:00 25/12/50
+                programEndInput.value = `${period} ${hour12}:${minutes}:${seconds} ${d}/${m}/${y}`;
+            }
+        }
+
+        async function loadCertificateData(id) {
+            const cert = await HealthStorageManager.getCertificate(id);
+            if (!cert) {
+                // Show error
+                return;
+            }
+            // Populate
+            const form = document.getElementById('healthCertForm');
+            // Basic populating logic (needs adaptation for flat fields vs nested)
+            Object.keys(cert).forEach(key => {
+                if (form.elements[key]) form.elements[key].value = cert[key];
+            });
+            // Gender radio
+            if (cert.gender) {
+                const radio = form.querySelector(`input[name="gender"][value="${cert.gender}"]`);
+                if (radio) radio.checked = true;
+            }
+        }
+
+        async function handleSave(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            // Basic validation
+            if (!data.certificateNumber || !data.holderName) {
+                Swal.fire('خطأ', 'يرجى تعبئة الحقول المطلوبة', 'error');
+                return;
+            }
+
+            // Handle Photo Upload (Resize & Base64)
+            const photoInput = form.querySelector('input[name="photo"]');
+            if (photoInput.files && photoInput.files[0]) {
+                try {
+                    const resizedImage = await resizeImage(photoInput.files[0], 400, 400, 0.7);
+                    data.photoUrl = resizedImage;
+                } catch (e) {
+                    console.error("Error converting image", e);
+                    // Fallback to original if resize fails (unlikely but safe)
+                    // data.photoUrl = await toBase64(photoInput.files[0]);
+                }
+            }
+
+            try {
+                const saved = await HealthStorageManager.saveCertificate(data);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم الحفظ',
+                    text: 'تم حفظ الشهادة بنجاح',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    window.location.href = `/health/health-certificate.html?id=${saved.id}`;
+                });
+            } catch (e) {
+                Swal.fire('خطأ', 'حدث خطأ أثناء الحفظ (تأكد من صغر حجم الصورة)', 'error');
+                console.error(e);
+            }
+        }
+
+        function resizeImage(file, maxWidth, maxHeight, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height) {
+                            if (width > maxWidth) {
+                                height *= maxWidth / width;
+                                width = maxWidth;
+                            }
+                        } else {
+                            if (height > maxHeight) {
+                                width *= maxHeight / height;
+                                height = maxHeight;
+                            }
+                        }
+
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = error => reject(error);
+                };
+                reader.onerror = error => reject(error);
+            });
+        }
+    </script>
+</body>
+
+</html>

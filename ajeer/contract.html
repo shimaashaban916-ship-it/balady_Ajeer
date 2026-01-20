@@ -772,7 +772,7 @@
         <button onclick="downloadPDF()" class="shadow-sm">
             <i class="bi bi-file-earmark-pdf"></i> تحميل PDF
         </button>
-        <a href="index.html">
+        <a href="/ajeer/ajeer-dashboard.html">
             <i class="bi bi-arrow-right"></i> عودة
         </a>
     </div>
@@ -780,7 +780,7 @@
     <!-- Mobile Header -->
     <div class="mobile-header no-print">
         <div class="mobile-header-content">
-            <div class="back-btn" onclick="window.location.href='index.html'">
+            <div class="back-btn" onclick="window.location.href='/ajeer/ajeer-dashboard.html'">
                 <i class="bi bi-arrow-right"></i>
             </div>
             <h1>
@@ -792,7 +792,7 @@
 
     <!-- Mobile Bottom Actions -->
     <div class="mobile-actions no-print">
-        <a href="index.html" class="btn-back">
+        <a href="/ajeer/ajeer-dashboard.html" class="btn-back">
             <i class="bi bi-arrow-right"></i>
             <span>عودة</span>
         </a>
@@ -812,9 +812,9 @@
             <!-- Header -->
             <div class="header">
                 <div class="header-right">
-                    <img src="img/logo_ministry_new.png" alt="وزارة الموارد البشرية"
+                    <img src="/shared/img/logo_ministry_new.png" alt="وزارة الموارد البشرية"
                         onerror="this.style.display='none'">
-                    <img src="img/logo_ajeer_new.png" alt="أجير" onerror="this.style.display='none'">
+                    <img src="/shared/img/logo_ajeer_new.png" alt="أجير" onerror="this.style.display='none'">
                 </div>
                 <div class="header-center">
                     <div class="header-title" id="data-contractType">تعاقد أجير</div>
@@ -931,13 +931,13 @@
 
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase-config.js"></script>
+    <script src="/shared/js/supabase-config.js"></script>
 
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/reminder.js"></script>
+    <script src="/ajeer/app.js"></script>
+    <script src="/shared/js/reminder.js"></script>
 
     <script>
         let currentContract = null;
@@ -950,7 +950,7 @@
                 loadContract(id);
             } else {
                 alert('لا يوجد عقد محدد');
-                window.location.href = 'index.html';
+                window.location.href = 'ajeer-dashboard.html';
             }
         });
 
@@ -958,7 +958,7 @@
             currentContract = await StorageManager.getContract(id);
             if (!currentContract) {
                 alert('العقد غير موجود');
-                window.location.href = 'index.html';
+                window.location.href = 'ajeer-dashboard.html';
                 return;
             }
 
@@ -1190,8 +1190,7 @@
             container.innerHTML = '';
 
             // 1. Web Barcode: Direct Link to Verification Page
-            const productionUrl = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'));
-            const verifyUrl = `${productionUrl}/verify.html?id=${currentContract.id}`;
+            const verifyUrl = window.location.origin + `/ajeer/verify.html?id=${currentContract.id}`;
 
             // 2. Text Barcode: JSON Data
             let status = "ساري";

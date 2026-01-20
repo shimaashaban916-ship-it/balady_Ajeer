@@ -64,8 +64,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(30px, 30px) scale(1.05); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, 30px) scale(1.05);
+            }
         }
 
         .scanner-container {
@@ -86,6 +93,7 @@
                 opacity: 0;
                 transform: translateY(40px) scale(0.95);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -111,9 +119,12 @@
         }
 
         @keyframes pulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
             }
+
             50% {
                 box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
             }
@@ -158,6 +169,7 @@
                 opacity: 0;
                 transform: translateY(10px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -358,13 +370,13 @@
 
         <div id="statusBox" class="status-box"></div>
 
-        <a href="index.html" class="back-btn">
+        <a href="/ajeer" class="back-btn">
             <i class="bi bi-arrow-right"></i>
             العودة للصفحة الرئيسية
         </a>
 
         <div class="footer-logo">
-            <img src="img/logo_ajeer_new.png" alt="Ajeer Logo">
+            <img src="/shared/img/logo_ajeer_new.png" alt="Ajeer Logo">
         </div>
     </div>
 

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشهادة الصحية - عرض</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        @font-face {
+            font-family: 'NotoKufiArabic';
+            src: url('../fonts/NotoKufiArabic-Regular.woff2') format('woff2'),
+                url('../fonts/NotoKufiArabic-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 10px;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        .certificate {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-top: 30px;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 36px;
+            margin-bottom: 11px;
+            margin-right: -127px;
+        }
+
+        .header img {
+            height: 196px;
+            width: auto;
+            object-fit: contain;
+            margin-right: 106px;
+        }
+
+        .header-text {
+            text-align: center;
+        }
+
+        .header h2 {
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            color: #004d23;
+            font-size: 46px;
+            font-weight: 700;
+            margin: 0;
+            font-weight: bolder;
+        }
+
+        .header-english {
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            color: #004d23;
+            font-size: 30px;
+            font-weight: 700;
+            margin: -17px 0 0 0;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+
+        .qr-section {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 25px;
+            margin-top: -36px;
+            margin-right: 0;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .qr-section .photo {
+            width: 182px;
+            height: 182px;
+            object-fit: fill;
+            border: 1px solid #ddd;
+        }
+
+        .qr-section .barcode-image {
+            width: 182px;
+            height: 182px;
+            object-fit: contain;
+        }
+
+        .title {
+            font-size: 58px;
+            font-weight: bolder;
+            color: #004d23;
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 20px;
+            margin-top: -15px;
+            margin-right: 50px;
+        }
+
+        .tow_sections {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            border: 8px solid #999;
+            border-radius: 20px;
+            background: white;
+            margin: -21px 0;
+            width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section {
+            text-align: right;
+            padding: 20px;
+            border: none;
+            border-radius: 0;
+            padding-bottom: -37px;
+            margin-top: -51px;
+        }
+
+        .section:first-child {
+            border-bottom: 6px solid #999;
+            padding-bottom: 27px;
+            margin-bottom: -58px;
+            padding-top: -15px;
+        }
+
+        .section:last-child {
+            padding-top: 44px;
+            margin-top: 48px;
+        }
+
+        .field {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+
+        .field.close-spacing {
+            justify-content: flex-start;
+            gap: 0;
+            margin-bottom: -37px;
+            padding-top: 23px;
+        }
+
+        .field.close-spacing .label {
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            width: 180px;
+            flex-shrink: 0;
+            text-align: right;
+            font-size: 26px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .field.close-spacing .value {
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            margin-right: 73px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #000;
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .field1 {
+            margin-bottom: 29px;
+            padding-bottom: 29px;
+        }
+
+        .field_tow {
+            margin-top: 27px;
+            margin-bottom: 11px;
+            padding-bottom: 22px;
+            padding-top: 14px;
+        }
+
+        .notes-section {
+            text-align: right;
+            padding: 25px;
+            line-height: 1.4;
+            font-size: 28px;
+            border: none;
+            margin-top: 50px;
+            padding-top: 30px;
+        }
+
+        .note-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 12px;
+        }
+
+        .bullet {
+            color: #000;
+            font-weight: bold;
+            font-size: 35px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        .note-text {
+            color: #000;
+            line-height: 1.3;
+            text-align: right;
+            font-size: 45px;
+            font-weight: 600;
+            margin-right: 12px;
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+        }
+
+        /* Actions */
+        .actions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-family: 'NotoKufiArabic', 'Cairo', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-green {
+            background: #007E3A;
+            color: white;
+        }
+
+        .btn-grey {
+            background: #6c757d;
+            color: white;
+        }
+
+        /* Page Break Controls for PDF */
+        .certificate {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        .header {
+            page-break-inside: avoid;
+            page-break-after: avoid;
+        }
+
+        .tow_sections {
+            page-break-inside: avoid;
+            page-break-before: avoid;
+            page-break-after: auto;
+        }
+
+        .notes-section {
+            page-break-before: always;
+            page-break-inside: auto;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+                margin: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .certificate {
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            .actions {
+                display: none;
+            }
+        }
+
+        /* Soft Gaussian Blur Effect */
+        .gaussian-blur {
+            filter: blur(1.5px);
+            /* Soft smooth blur, no pixelation */
+            -webkit-filter: blur(1.5px);
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/shared/js/supabase-config.js"></script>
+    <script src="/health/health-certificate-manager.js"></script>
+</head>
+
+<body>
+    <div class="certificate" id="certificateContent">
+        <div class="header">
+            <div class="header-top">
+                <img src="/shared/img/balady.png" alt="Logo" class="municipality-logo gaussian-blur" />
+                <div class="header-text">
+                    <h2 class="gaussian-blur">أمانة منطقة الرياض</h2>
+                    <div class="header-english gaussian-blur">RIYADH REGION MUNICIPALITY</div>
+                </div>
+            </div>
+            <div class="qr-section">
+                <div class="photo-box">
+                    <img id="personalPhoto" class="photo" alt="الصورة الشخصية" style="display: none;">
+                    <div id="photoPlaceholder"
+                        style="color: #ccc; font-size: 50px; width: 182px; height: 182px; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd;">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <div id="qrcode" class="barcode-image"></div>
+            </div>
+            <div class="title gaussian-blur">شهادة صحية</div>
+        </div>
+
+        <div class="tow_sections">
+            <div class="section">
+                <div class="field close-spacing field1">
+                    <span class="label">رقم الشهادة</span>
+                    <span class="value" style="direction: ltr;" id="certNumber">--</span>
+                </div>
+                <div class="field close-spacing field1">
+                    <span class="label">مكان الإصدار</span>
+                    <span class="value" id="issuer">أمانة منطقة الرياض</span>
+                </div>
+                <div class="field close-spacing">
+                    <span class="label">نهاية الصلاحية</span>
+                    <span class="value" style="direction: ltr;" id="expiryDate">--</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="field close-spacing">
+                    <span class="label">الاسم</span>
+                    <span class="value" id="holderName">--</span>
+                </div>
+                <div class="field close-spacing field_tow">
+                    <span class="label">رقم الهوية</span>
+                    <span class="value" style="direction: ltr;" id="holderId">--</span>
+                </div>
+                <div class="field close-spacing field_tow">
+                    <span class="label">الجنس</span>
+                    <span class="value" id="gender">--</span>
+                </div>
+                <div class="field close-spacing field_tow">
+                    <span class="label">الجنسية</span>
+                    <span class="value" id="nationality">--</span>
+                </div>
+                <div class="field close-spacing field_tow">
+                    <span class="label">المهنة</span>
+                    <span class="value" id="profession">--</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section notes-section">
+            <div class="note-item">
+                <span class="bullet">*</span>
+                <span class="note-text">حامل هذه الشهادة حاصل على تقرير طبي يثبت خلوه من الأمراض المعدية وأجريت له
+                    التطعيمات التي تخوله للعمل في محلات الأغذية والصحة العامة</span>
+            </div>
+            <div class="note-item">
+                <span class="bullet">*</span>
+                <span class="note-text">تشغيل عمال ليس لديهم شهادات صحية أو لديهم شهادات صحية منتهية يعاقب عليها النظام
+                    بغرامة مالية عن كل عامل</span>
+            </div>
+            <div class="note-item">
+                <span class="bullet">*</span>
+                <span class="note-text">تجديد هذه الشهادة قبل انتهائها بثلاثين يوماً</span>
+            </div>
+            <div class="note-item">
+                <span class="bullet">*</span>
+                <span class="note-text">لا تعتبر هذه الشهادة إثباتاً هويأ لحامليها</span>
+            </div>
+            <div class="note-item">
+                <span class="bullet">*</span>
+                <span class="note-text">للتأكد من سلامة الشهادة يرجى زيارة موقع أمانة منطقة الرياض</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+        <button onclick="downloadPDF()" class="btn btn-green">
+            <i class="bi bi-download"></i> تحميل PDF
+        </button>
+        <a href="/shared/index.html" class="btn btn-grey">
+            <i class="bi bi-arrow-right"></i> عودة
+        </a>
+    </div>
+
+    <script>
+        async function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+
+            // Hide action buttons
+            document.querySelector('.actions').style.display = 'none';
+
+            // Create PDF
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            // const pageHeight = pdf.internal.pageSize.getHeight();
+
+            // Capture main certificate (header + table)
+            const mainContent = document.querySelector('.certificate');
+            const notesSection = document.querySelector('.notes-section');
+
+            // --- PRE-PROCESSING: Layout-Safe Blur ---
+            const blurredElements = document.querySelectorAll('.gaussian-blur');
+            const restoreSteps = [];
+
+            try {
+                for (const el of blurredElements) {
+                    if (el.tagName === 'IMG') {
+                        // For IMG: Replace src (safe for layout if dimensions kept)
+                        const originalSrc = el.src;
+
+                        // Create blurred version
+                        const canvas = document.createElement('canvas');
+                        canvas.width = el.naturalWidth || el.width;
+                        canvas.height = el.naturalHeight || el.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.filter = 'blur(4px)'; // Blur amount
+                        ctx.drawImage(el, 0, 0, canvas.width, canvas.height);
+
+                        el.src = canvas.toDataURL('image/png');
+                        el.style.filter = 'none'; // Disable CSS filter
+
+                        restoreSteps.push(() => {
+                            el.src = originalSrc;
+                            el.style.filter = '';
+                        });
+                    } else {
+                        // For TEXT: Use Background Image + Transparent Text (Preserves EXACT layout)
+                        const originalColor = el.style.color;
+                        const originalBg = el.style.backgroundImage;
+
+                        // Capture the element text to canvas
+                        // We use html2canvas on the single element to get a clean raster
+                        const textCanvas = await html2canvas(el, {
+                            backgroundColor: null,
+                            logging: false,
+                            scale: 3
+                        });
+
+                        // Apply blur to a new canvas
+                        const blurCanvas = document.createElement('canvas');
+                        blurCanvas.width = textCanvas.width;
+                        blurCanvas.height = textCanvas.height;
+                        const ctx = blurCanvas.getContext('2d');
+                        ctx.filter = 'blur(4.5px)'; // Scaled blur
+                        ctx.drawImage(textCanvas, 0, 0);
+
+                        // Apply as background
+                        el.style.backgroundImage = `url(${blurCanvas.toDataURL('image/png')})`;
+                        el.style.backgroundPosition = 'center';
+                        el.style.backgroundSize = '100% 100%'; // Stretch to fit element box exactly
+                        el.style.backgroundRepeat = 'no-repeat';
+                        el.style.color = 'transparent'; // Make real text invisible but taking up space
+                        el.style.filter = 'none'; // Disable CSS filter
+
+                        restoreSteps.push(() => {
+                            el.style.color = originalColor;
+                            el.style.backgroundImage = originalBg;
+                            el.style.backgroundPosition = '';
+                            el.style.backgroundSize = '';
+                            el.style.backgroundRepeat = '';
+                            el.style.filter = '';
+                        });
+                    }
+                }
+            } catch (err) {
+                console.error("Blur processing failed:", err);
+            }
+
+            // Temporarily hide notes
+            notesSection.style.display = 'none';
+
+            // Capture page 1 (main certificate)
+            const canvas1 = await html2canvas(mainContent, {
+                scale: 3,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff'
+            });
+
+            // --- RESTORE DOM ---
+            restoreSteps.forEach(restore => restore());
+
+            const imgData1 = canvas1.toDataURL('image/jpeg', 1.0);
+            const imgWidth1 = pageWidth - 10;
+            const imgHeight1 = (canvas1.height * imgWidth1) / canvas1.width;
+
+            pdf.addImage(imgData1, 'JPEG', 5, 5, imgWidth1, imgHeight1);
+
+            // Show notes and hide main content
+            notesSection.style.display = 'block';
+            mainContent.querySelector('.header').style.display = 'none';
+            mainContent.querySelector('.tow_sections').style.display = 'none';
+
+            // Add new page for notes
+            pdf.addPage();
+
+            // Capture page 2 (notes only)
+            const canvas2 = await html2canvas(notesSection, {
+                scale: 3,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff'
+            });
+
+            const imgData2 = canvas2.toDataURL('image/jpeg', 1.0);
+            const imgWidth2 = pageWidth - 10;
+            const imgHeight2 = (canvas2.height * imgWidth2) / canvas2.width;
+
+            pdf.addImage(imgData2, 'JPEG', 5, 5, imgWidth2, imgHeight2);
+
+            // Restore visibility
+            mainContent.querySelector('.header').style.display = '';
+            mainContent.querySelector('.tow_sections').style.display = '';
+            document.querySelector('.actions').style.display = '';
+
+            // Save PDF with holder name
+            const holderName = document.getElementById('holderName').textContent || 'certificate';
+            const fileName = `health-certificate-${holderName}.pdf`;
+            pdf.save(fileName);
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            if (!id) return;
+
+            const cert = await HealthStorageManager.getCertificate(id);
+            if (cert) {
+                document.getElementById('certNumber').textContent = cert.certificateNumber || '--';
+                document.getElementById('issuer').textContent = cert.issuer || 'أمانة منطقة الرياض';
+                document.getElementById('expiryDate').textContent = cert.expiryDate || '--';
+                document.getElementById('holderName').textContent = cert.holderName || '--';
+                document.getElementById('holderId').textContent = cert.idn || cert.holderId || '--';
+                document.getElementById('gender').textContent = cert.gender || '--';
+                document.getElementById('nationality').textContent = cert.nationality || '--';
+                document.getElementById('profession').textContent = cert.profession || '--';
+
+                // Photo Handling
+                if (cert.photoUrl) {
+                    const img = document.getElementById('personalPhoto');
+                    const ph = document.getElementById('photoPlaceholder');
+                    if (img && ph) {
+                        img.src = cert.photoUrl;
+                        img.style.display = 'block';
+                        ph.style.display = 'none';
+                    }
+                }
+            }
+
+            // QR Code generation - Link to the NEW dedicated health verification portal
+            const certId = id || '000000';
+            const portalUrl = window.location.origin + '/health/health-verify.html';
+            const qrUrl = `${portalUrl}?id=${encodeURIComponent(btoa(certId))}`;
+
+            const qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = ''; // Clear previous
+
+            new QRCode(qrContainer, {
+                text: qrUrl,
+                width: 512, // High resolution for sharpness
+                height: 512,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H,
+                quietZone: 10
+            });
+        });
+    </script>
+</body>
+
+</html>

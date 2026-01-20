@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الشهادات الصحية - اللوحة الرئيسية</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/shared/css/style.css">
+    <style>
+        .cert-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #fff;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            position: relative;
+        }
+
+        .cert-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .cert-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: #198754;
+            opacity: 0.8;
+        }
+
+        .cert-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 15px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: #cbd5e1;
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+        }
+
+        .cert-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cert-badge {
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .bg-success-soft {
+            background-color: #f0fdf4 !important;
+            color: #16a34a !important;
+        }
+
+        .action-icon-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border: none;
+            background: #f8fafc;
+            color: #64748b;
+        }
+
+        .action-icon-btn:hover {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+
+        .action-icon-btn.btn-view {
+            color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .action-icon-btn.btn-edit {
+            color: #d97706;
+            background: #fffbeb;
+        }
+
+        .action-icon-btn.btn-delete {
+            color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .cert-number-pill {
+            background: #f1f5f9;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <!-- Header -->
+    <div class="bg-white shadow-sm border-bottom py-3 mb-4 sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="h5 fw-bold mb-0 text-success d-flex align-items-center gap-2">
+                <i class="bi bi-file-medical-fill"></i>
+                نظام الشهادات الصحية
+            </h1>
+            <a href="/shared/index.html" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-grid-fill"></i> القائمة الرئيسية
+            </a>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container pb-5">
+
+        <!-- Actions -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="h5 fw-bold mb-0">جميع الشهادات</h2>
+            <a href="/health/health-form.html" class="btn btn-success shadow-sm">
+                <i class="bi bi-plus-lg"></i> شهادة جديدة
+            </a>
+        </div>
+
+        <!-- List -->
+        <div id="certList" class="row g-3">
+            <!-- Items will be injected here -->
+            <div class="col-12 text-center py-5 text-muted">
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">جاري التحميل...</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/shared/js/supabase-config.js"></script>
+    <!-- JavaScript -->
+    <script src="/health/health-certificate-manager.js"></script>
+    <script src="/shared/js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('certList');
+            const certs = await HealthStorageManager.getCertificates();
+
+            container.innerHTML = '';
+
+            if (certs.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12">
+                        <div class="text-center py-5 bg-white rounded shadow-sm border border-dashed">
+                            <i class="bi bi-file-earmark-x text-muted" style="font-size: 3rem;"></i>
+                            <p class="mt-3 text-muted fw-bold">لا توجد شهادات مسجلة</p>
+                            <a href="health-form.html" class="btn btn-success btn-sm mt-2">
+                                <i class="bi bi-plus-lg"></i> إضافة شهادة جديدة
+                            </a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            certs.forEach(cert => {
+                const card = document.createElement('div');
+                card.className = 'col-12 col-md-6 col-lg-4';
+
+                const photoHtml = cert.photoUrl
+                    ? `<img src="${cert.photoUrl}" alt="Photo">`
+                    : '<i class="bi bi-person"></i>';
+
+                card.innerHTML = `
+                    <div class="card cert-card h-100">
+                        <div class="card-body p-4">
+                            <!-- Top: Status and Date -->
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <span class="cert-badge bg-success-soft">نشط</span>
+                                <div class="text-muted small d-flex align-items-center gap-1">
+                                    <i class="bi bi-calendar3"></i>
+                                    ${formatDate(cert.issueDate)}
+                                </div>
+                            </div>
+
+                            <!-- Middle: Identity -->
+                            <div class="d-flex align-items-start gap-3 mb-4">
+                                <div class="cert-avatar shadow-sm">
+                                    ${photoHtml}
+                                </div>
+                                <div class="flex-grow-1 overflow-hidden">
+                                    <h5 class="fw-bold text-dark mb-1 text-truncate">${cert.holderName || 'اسم غير متوفر'}</h5>
+                                    <div class="cert-number-pill d-inline-block">
+                                        ${cert.certificateNumber || '0000-0000'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom: Info Grid -->
+                            <div class="mb-4">
+                                <div class="d-flex align-items-center gap-2 text-muted small mb-2">
+                                    <i class="bi bi-shop text-success"></i>
+                                    <span class="text-truncate">${cert.facilityName || '-'}</span>
+                                </div>
+                                <div class="d-flex align-items-center gap-2 text-muted small">
+                                    <i class="bi bi-person-badge text-success"></i>
+                                    <span>${cert.profession || '-'}</span>
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-auto">
+                                <a href="/health/health-certificate.html?id=${cert.id}" class="btn btn-success btn-sm px-4 rounded-pill shadow-sm">
+                                    <i class="bi bi-eye-fill me-1"></i> عرض الشهادة
+                                </a>
+                                <div class="d-flex gap-2">
+                                    <a href="/health/health-form.html?id=${cert.id}" class="action-icon-btn btn-edit" title="تعديل">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <button onclick="confirmDelete('${cert.id}')" class="action-icon-btn btn-delete" title="حذف">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        });
+
+        async function confirmDelete(id) {
+            Swal.fire({
+                title: 'هل أنت متأكد؟',
+                text: "لن تتمكن من التراجع عن الحذف!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#198754',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'نعم، احذف',
+                cancelButtonText: 'إلغاء'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        await HealthStorageManager.deleteCertificate(id);
+                        Swal.fire(
+                            'تم الحذف!',
+                            'تم حذف الشهادة بنجاح.',
+                            'success'
+                        ).then(() => {
+                            window.location.reload();
+                        });
+                    } catch (error) {
+                        Swal.fire('خطأ', 'حدث خطأ أثناء الحذف', 'error');
+                    }
+                }
+            });
+        }
+
+        function formatDate(date) {
+            return date || '-';
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>
