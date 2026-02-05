@@ -1206,15 +1206,14 @@
                 }
             }
 
-            // Manually build JSON string to guarantee order and LTR-friendly layout
-            // \u202D (LRO) forces Left-to-Right display. \u200E (LRM) isolates Arabic text.
-            const dataText = '\u202D' + '{' +
+            // Build clean JSON string with UTF-8 Arabic text (no control characters)
+            const dataText = '{' +
                 `"id_number":"${currentContract.workerIdNumber || ""}", ` +
-                `"occupation":"\u200E${currentContract.workerProfession || ""}", ` +
-                `"status":"\u200E${status}", ` +
+                `"occupation":"${currentContract.workerProfession || ""}", ` +
+                `"status":"${status}", ` +
                 `"issue_date":"${currentContract.startDate ? formatDate(currentContract.startDate) : ""}", ` +
                 `"expiry_date":"${currentContract.endDate ? formatDate(currentContract.endDate) : ""}"` +
-                '}' + '\u202C';
+                '}';
 
             // Generate QR based on type
             let qr;
