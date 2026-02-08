@@ -37,6 +37,15 @@
             opacity: 0.8;
         }
 
+        .cert-card.disabled {
+            opacity: 0.75;
+            filter: grayscale(0.2);
+        }
+
+        .cert-card.disabled::before {
+            background: #dc2626;
+        }
+
         .cert-avatar {
             width: 64px;
             height: 64px;
@@ -70,6 +79,11 @@
             color: #16a34a !important;
         }
 
+        .bg-danger-soft {
+            background-color: #fee2e2 !important;
+            color: #dc2626 !important;
+        }
+
         .action-icon-btn {
             width: 32px;
             height: 32px;
@@ -101,6 +115,16 @@
         .action-icon-btn.btn-delete {
             color: #dc2626;
             background: #fef2f2;
+        }
+
+        .action-icon-btn.btn-warning {
+            color: #f59e0b;
+            background: #fef3c7;
+        }
+
+        .action-icon-btn.btn-success {
+            color: #10b981;
+            background: #d1fae5;
         }
 
         .cert-number-pill {
@@ -188,12 +212,25 @@
                     ? `<img src="${cert.photoUrl}" alt="Photo">`
                     : '<i class="bi bi-person"></i>';
 
+                const statusBadge = cert.isDisabled
+                    ? '<span class="cert-badge bg-danger-soft">معطل</span>'
+                    : '<span class="cert-badge bg-success-soft">نشط</span>';
+
+                const disabledClass = cert.isDisabled ? 'disabled' : '';
+
+                const toggleIcon = cert.isDisabled
+                    ? '<i class="bi bi-check-circle-fill"></i>'
+                    : '<i class="bi bi-x-circle-fill"></i>';
+
+                const toggleClass = cert.isDisabled ? 'btn-success' : 'btn-warning';
+                const toggleTitle = cert.isDisabled ? 'تفعيل' : 'تعطيل';
+
                 card.innerHTML = `
-                    <div class="card cert-card h-100">
+                    <div class="card cert-card h-100 ${disabledClass}">
                         <div class="card-body p-4">
                             <!-- Top: Status and Date -->
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <span class="cert-badge bg-success-soft">نشط</span>
+                                ${statusBadge}
                                 <div class="text-muted small d-flex align-items-center gap-1">
                                     <i class="bi bi-calendar3"></i>
                                     ${formatDate(cert.issueDate)}
@@ -231,6 +268,11 @@
                                     <i class="bi bi-eye-fill me-1"></i> عرض الشهادة
                                 </a>
                                 <div class="d-flex gap-2">
+                                    <button onclick="toggleStatus('${cert.id}', ${!cert.isDisabled})" 
+                                            class="action-icon-btn ${toggleClass}" 
+                                            title="${toggleTitle}">
+                                        ${toggleIcon}
+                                    </button>
                                     <a href="/health/health-form.html?id=${cert.id}" class="action-icon-btn btn-edit" title="تعديل">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
@@ -272,6 +314,37 @@
                     }
                 }
             });
+        }
+
+        async function toggleStatus(id, shouldDisable) {
+            const actionText = shouldDisable ? 'تعطيل' : 'تفعيل';
+            const result = await Swal.fire({
+                title: `هل تريد ${actionText} هذه الشهادة؟`,
+                text: shouldDisable
+                    ? "لن يتمكن حامل الشهادة من استخدامها عند المسح"
+                    : "سيتمكن حامل الشهادة من استخدامها مرة أخرى",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: shouldDisable ? '#dc2626' : '#10b981',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: `نعم، ${actionText}`,
+                cancelButtonText: 'إلغاء'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    await HealthStorageManager.toggleCertificateStatus(id, shouldDisable);
+                    Swal.fire(
+                        `تم ${actionText}!`,
+                        `تم ${actionText} الشهادة بنجاح.`,
+                        'success'
+                    ).then(() => {
+                        window.location.reload();
+                    });
+                } catch (error) {
+                    Swal.fire('خطأ', `حدث خطأ أثناء ${actionText}`, 'error');
+                }
+            }
         }
 
         function formatDate(date) {

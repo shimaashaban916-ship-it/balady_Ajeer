@@ -273,6 +273,13 @@
             const cert = await HealthStorageManager.getCertificate(id);
 
             if (cert) {
+                // Check if certificate is disabled
+                if (cert.isDisabled) {
+                    // Redirect to disabled page
+                    window.location.href = `/health/health-disabled.html?id=${id}`;
+                    return;
+                }
+
                 renderData(cert);
                 document.getElementById('pageContent').style.display = 'block';
             } else {

@@ -69,7 +69,8 @@ class HealthStorageManager {
                     program_end_date: cert.programEndDate || null,
                     facility_name: cert.facilityName,
                     facility_license: cert.facilityLicense,
-                    photo_url: cert.photoUrl || null
+                    photo_url: cert.photoUrl || null,
+                    is_disabled: cert.isDisabled || false
                 };
 
                 if (cert.id) {
@@ -122,6 +123,7 @@ class HealthStorageManager {
             facilityName: cert.facility_name || cert.facilityName,
             facilityLicense: cert.facility_license || cert.facilityLicense,
             photoUrl: cert.photo_url || cert.photoUrl,
+            isDisabled: cert.is_disabled || cert.isDisabled || false,
             createdAt: cert.created_at || cert.createdAt
         };
     }
@@ -183,5 +185,35 @@ class HealthStorageManager {
             return crypto.randomUUID();
         }
         return 'id-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+    }
+
+    // Toggle certificate status (enable/disable)
+    static async toggleCertificateStatus(id, isDisabled) {
+        if (this.isSupabaseAvailable()) {
+            try {
+                const { data, error } = await supabaseClient
+                    .from(this.TABLE_NAME)
+                    .update({ is_disabled: isDisabled })
+                    .eq('id', id)
+                    .select()
+                    .single();
+
+                if (error) throw error;
+                return this.normalizeCertificate(data);
+            } catch (error) {
+                console.error('Supabase toggle status error:', error);
+                throw error;
+            }
+        }
+
+        // LocalStorage fallback
+        const certs = this.getCertificatesFromLocal();
+        const cert = certs.find(c => c.id === id);
+        if (cert) {
+            cert.isDisabled = isDisabled;
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(certs));
+            return cert;
+        }
+        return null;
     }
 }
