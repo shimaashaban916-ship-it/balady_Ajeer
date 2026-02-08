@@ -148,15 +148,46 @@
                     <hr class="my-2">
                 </div>
                 <div class="card-body text-end">
-                    <div class="mb-3">
-                        <label class="form-label">صورة شخصية (اختياري)</label>
-                        <input type="file" class="form-control" name="photo" accept="image/*" id="photoInput">
-                    </div>
-                    <div id="photoPreview" class="mt-2 d-flex justify-content-end">
-                        <!-- Preview will appear here -->
+                    <div class="d-flex align-items-start gap-3">
+                        <!-- Photo Input -->
+                        <div class="flex-grow-1">
+                            <label class="form-label">صورة شخصية (اختياري)</label>
+                            <input type="file" class="form-control" name="photo" accept="image/*" id="photoInput">
+                        </div>
+                        <!-- Photo Preview Card -->
+                        <div id="photoPreview" class="photo-preview-card">
+                            <i class="bi bi-camera text-muted fs-3"></i>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <style>
+                .photo-preview-card {
+                    width: 100px;
+                    height: 100px;
+                    border: 2px dashed #dee2e6;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f8f9fa;
+                    overflow: hidden;
+                    flex-shrink: 0;
+                    transition: all 0.3s ease;
+                }
+
+                .photo-preview-card:hover {
+                    border-color: #198754;
+                    background: #f0fdf4;
+                }
+
+                .photo-preview-card img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            </style>
 
 
             <!-- Spacer to prevent footer overlap -->
@@ -201,7 +232,7 @@
                     if (file) {
                         const reader = new FileReader();
                         reader.onload = function (e) {
-                            photoPreview.innerHTML = `<img src="${e.target.result}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                            photoPreview.innerHTML = `<img src="${e.target.result}">`;
                         }
                         reader.readAsDataURL(file);
                     } else {
