@@ -765,6 +765,7 @@
             <i class="bi bi-qr-code-scan selector-icon"></i>
             <select id="barcodeType" class="barcode-select" onchange="updateBarcodeType(this.value)">
                 <option value="verify">باركود التحقق (Web)</option>
+                <option value="captcha">باركود التحقق (Kaptcha)</option>
                 <option value="data">باركود البيانات (Text)</option>
             </select>
             <i class="bi bi-chevron-down selector-chevron"></i>
@@ -1217,9 +1218,13 @@
 
             // Generate QR based on type
             let qr;
-            if (currentBarcodeType === 'verify') {
+            if (currentBarcodeType === 'verify' || currentBarcodeType === 'captcha') {
                 qr = qrcode(0, 'L');
-                qr.addData(verifyUrl);
+                let finalUrl = verifyUrl;
+                if (currentBarcodeType === 'captcha') {
+                    finalUrl += '&captcha=true';
+                }
+                qr.addData(finalUrl);
             } else {
                 qr = qrcode(0, 'M'); // Higher correction for text
                 // Fix for Arabic/UTF-8 support
@@ -1229,8 +1234,12 @@
             qr.make();
             const imgTag = qr.createImgTag(4, 0); // 4 = cell size
 
-            if (currentBarcodeType === 'verify') {
-                container.innerHTML = `<a href="${verifyUrl}" target="_blank" style="cursor: pointer; display: block; height: 100%;">${imgTag}</a>`;
+            if (currentBarcodeType === 'verify' || currentBarcodeType === 'captcha') {
+                let finalUrl = verifyUrl;
+                if (currentBarcodeType === 'captcha') {
+                    finalUrl += '&captcha=true';
+                }
+                container.innerHTML = `<a href="${finalUrl}" target="_blank" style="cursor: pointer; display: block; height: 100%;">${imgTag}</a>`;
             } else {
                 container.innerHTML = imgTag;
             }
